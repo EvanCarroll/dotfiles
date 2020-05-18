@@ -4,6 +4,8 @@ default_border pixel 3
 focus_follows_mouse no
 hide_edge_borders none
 
+set $browser     chromium
+
 set $mod Mod4
 set $ws1 "1:code"
 set $ws2 "2:2"
@@ -35,8 +37,6 @@ set $uri_search   "https://duckduckgo.com"
 
 bindsym $mod+bracketright move workspace to output right
 bindsym $mod+bracketleft move workspace to output left
-
-set $browser     chromium
 
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
@@ -121,7 +121,6 @@ exec --no-startup-id projectM-pulseaudio
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec dmenu_run
 bindsym $mod+Print exec xfce4-screenshooter
-
 
 bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5%
