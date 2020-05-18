@@ -16,16 +16,28 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+export MSSQL_CLI_TELEMETRY_OPTOUT=1
+## Because you need a long password with nums, lc, and ucs
+export MSSQL_SA_PASSWORD="MICROSOFTsucksH4RD"
+export PAGER="less -Rs"
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$HOME/perl5/bin:$PATH"
-export MSSQL_CLI_TELEMETRY_OPTOUT=1
-## Because you need a long password with nums, lc, and ucs
-export MSSQL_SA_PASSWORD="MICROSOFTsucksH4RD"
-export PAGER="less -Rs"
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+if [ -d "$HOME/.cargo/bin" ] ; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+if [ -d "$HOME/perl5/bin" ] ; then
+    PATH="$HOME/perl5/bin:$PATH"
+fi
+
 
 if [ ! -S ~/.ssh/ssh_auth_sock ]; then
 	eval `ssh-agent`
