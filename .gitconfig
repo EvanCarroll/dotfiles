@@ -1,0 +1,11 @@
+# This is Git's per-user configuration file.
+
+[feature]
+manyFiles = true
+
+[core]
+untrackedCache = true
+
+[user]
+name = Evan Carroll
+email = me@evancarroll.com

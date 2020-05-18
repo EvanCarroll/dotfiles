@@ -1,0 +1,334 @@
+servers = (
+  {
+    address = "irc.freenode.net";
+    chatnet = "Freenode";
+    port = "6697";
+    use_ssl = "yes";
+    ssl_verify = "yes";
+    autoconnect = "yes";
+  }
+);
+
+chatnets = {
+  Freenode = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "4";
+    max_whois = "1";
+    sasl_mechanism = "PLAIN";
+    sasl_username = "EvanCarroll";
+    sasl_password = "REDACTED";
+  };
+};
+
+channels = (
+  { name = "#Houston"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "##Houston"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#HoustonHackers"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#HLUG"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#PostgreSQL"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#PostgreSQL-Lounge"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#PostGIS"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "##Marxism"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "##Socialism"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#cPanel"; chatnet = "Freenode"; autojoin = "Yes"; }
+);
+
+aliases = {
+  ATAG = "WINDOW SERVER";
+  ADDALLCHANS = "SCRIPT EXEC foreach my \\$channel (Irssi::channels()) { Irssi::command(\"CHANNEL ADD -auto \\$channel->{name} \\$channel->{server}->{tag} \\$channel->{key}\")\\;}";
+  B = "BAN";
+  BACK = "AWAY";
+  BANS = "BAN";
+  BYE = "QUIT";
+  C = "CLEAR";
+  CALC = "EXEC - if command -v bc >/dev/null 2>&1\\; then printf '%s=' '$*'\\; echo '$*' | bc -l\\; else echo bc was not found\\; fi";
+  CHAT = "DCC CHAT";
+  CUBES = "SCRIPT EXEC Irssi::active_win->print(\"%_bases\", MSGLEVEL_CLIENTCRAP) \\; Irssi::active_win->print( do { join '', map { \"%x0\\${_}0\\$_\" } '0'..'9','A'..'F' }, MSGLEVEL_NEVER | MSGLEVEL_CLIENTCRAP) \\; Irssi::active_win->print(\"%_cubes\", MSGLEVEL_CLIENTCRAP) \\; Irssi::active_win->print( do { my \\$y = \\$_*6 \\; join '', map { my \\$x = \\$_ \\; map { \"%x\\$x\\$_\\$x\\$_\" } @{['0'..'9','A'..'Z']}[\\$y .. \\$y+5] } 1..6 }, MSGLEVEL_NEVER | MSGLEVEL_CLIENTCRAP) for 0..5 \\; Irssi::active_win->print(\"%_grays\", MSGLEVEL_CLIENTCRAP) \\; Irssi::active_win->print( do { join '', map { \"%x7\\${_}7\\$_\" } 'A'..'X' }, MSGLEVEL_NEVER | MSGLEVEL_CLIENTCRAP) \\; Irssi::active_win->print(\"%_mIRC extended colours\", MSGLEVEL_CLIENTCRAP) \\; my \\$x \\; \\$x .= sprintf \"\00399,%02d%02d\",\\$_,\\$_ for 0..15 \\; Irssi::active_win->print(\\$x, MSGLEVEL_NEVER | MSGLEVEL_CLIENTCRAP) \\; for my \\$z (0..6) { my \\$x \\; \\$x .= sprintf \"\00399,%02d%02d\",\\$_,\\$_ for 16+(\\$z*12)..16+(\\$z*12)+11 \\; Irssi::active_win->print(\\$x, MSGLEVEL_NEVER | MSGLEVEL_CLIENTCRAP) }";
+  DATE = "TIME";
+  DEHIGHLIGHT = "DEHILIGHT";
+  DESCRIBE = "ACTION";
+  DHL = "DEHILIGHT";
+  EXEMPTLIST = "MODE $C +e";
+  EXIT = "QUIT";
+  GOTO = "SCROLLBACK GOTO";
+  HIGHLIGHT = "HILIGHT";
+  HL = "HILIGHT";
+  HOST = "USERHOST";
+  INVITELIST = "MODE $C +I";
+  J = "JOIN";
+  K = "KICK";
+  KB = "KICKBAN";
+  KN = "KNOCKOUT";
+  LAST = "LASTLOG";
+  LEAVE = "PART";
+  M = "MSG";
+  MUB = "UNBAN *";
+  N = "NAMES";
+  NMSG = "^MSG";
+  P = "PART";
+  Q = "QUERY";
+  RESET = "SET -default";
+  RUN = "SCRIPT LOAD";
+  SAY = "MSG *";
+  SB = "SCROLLBACK";
+  SBAR = "STATUSBAR";
+  SIGNOFF = "QUIT";
+  SV = "MSG * Irssi $J ($V) - http://www.irssi.org";
+  T = "TOPIC";
+  UB = "UNBAN";
+  UMODE = "MODE $N";
+  UNSET = "SET -clear";
+  W = "WHO";
+  WC = "WINDOW CLOSE";
+  WG = "WINDOW GOTO";
+  WJOIN = "JOIN -window";
+  WI = "WHOIS";
+  WII = "WHOIS $0 $0";
+  WL = "WINDOW LIST";
+  WN = "WINDOW NEW HIDDEN";
+  WQUERY = "QUERY -window";
+  WW = "WHOWAS";
+  1 = "WINDOW GOTO 1";
+  2 = "WINDOW GOTO 2";
+  3 = "WINDOW GOTO 3";
+  4 = "WINDOW GOTO 4";
+  5 = "WINDOW GOTO 5";
+  6 = "WINDOW GOTO 6";
+  7 = "WINDOW GOTO 7";
+  8 = "WINDOW GOTO 8";
+  9 = "WINDOW GOTO 9";
+  10 = "WINDOW GOTO 10";
+  11 = "WINDOW GOTO 11";
+  12 = "WINDOW GOTO 12";
+  13 = "WINDOW GOTO 13";
+  14 = "WINDOW GOTO 14";
+  15 = "WINDOW GOTO 15";
+  16 = "WINDOW GOTO 16";
+  17 = "WINDOW GOTO 17";
+  18 = "WINDOW GOTO 18";
+  19 = "WINDOW GOTO 19";
+  20 = "WINDOW GOTO 20";
+  21 = "WINDOW GOTO 21";
+  22 = "WINDOW GOTO 22";
+  23 = "WINDOW GOTO 23";
+  24 = "WINDOW GOTO 24";
+  25 = "WINDOW GOTO 25";
+  26 = "WINDOW GOTO 26";
+  27 = "WINDOW GOTO 27";
+  28 = "WINDOW GOTO 28";
+  29 = "WINDOW GOTO 29";
+  30 = "WINDOW GOTO 30";
+  31 = "WINDOW GOTO 31";
+  32 = "WINDOW GOTO 32";
+  33 = "WINDOW GOTO 33";
+  34 = "WINDOW GOTO 34";
+  35 = "WINDOW GOTO 35";
+  36 = "WINDOW GOTO 36";
+  37 = "WINDOW GOTO 37";
+  38 = "WINDOW GOTO 38";
+  39 = "WINDOW GOTO 39";
+  40 = "WINDOW GOTO 40";
+  41 = "WINDOW GOTO 41";
+  42 = "WINDOW GOTO 42";
+  43 = "WINDOW GOTO 43";
+  44 = "WINDOW GOTO 44";
+  45 = "WINDOW GOTO 45";
+  46 = "WINDOW GOTO 46";
+  47 = "WINDOW GOTO 47";
+  48 = "WINDOW GOTO 48";
+  49 = "WINDOW GOTO 49";
+};
+
+statusbar = {
+
+  items = {
+
+    barstart = "{sbstart}";
+    barend = "{sbend}";
+
+    topicbarstart = "{topicsbstart}";
+    topicbarend = "{topicsbend}";
+
+    time = "{sb $Z}";
+    user = "{sb {sbnickmode $cumode}$N{sbmode $usermode}{sbaway $A}}";
+
+    window = "{sb $winref:$tag/$itemname{sbmode $M}}";
+    window_empty = "{sb $winref{sbservertag $tag}}";
+
+    prompt = "{prompt $[.15]itemname}";
+    prompt_empty = "{prompt $winname}";
+
+    topic = " $topic";
+    topic_empty = " Irssi v$J - http://www.irssi.org";
+
+    lag = "{sb Lag: $0-}";
+    act = "{sb Act: $0-}";
+    more = "-- more --";
+  };
+
+  default = {
+
+    window = {
+
+      disabled = "no";
+      type = "window";
+      placement = "bottom";
+      position = "1";
+      visible = "active";
+
+      items = {
+        barstart = { priority = "100"; };
+        time = { };
+        user = { };
+        window = { };
+        window_empty = { };
+        lag = { priority = "-1"; };
+        act = { priority = "10"; };
+        more = { priority = "-1"; alignment = "right"; };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
+
+    window_inact = {
+
+      type = "window";
+      placement = "bottom";
+      position = "1";
+      visible = "inactive";
+
+      items = {
+        barstart = { priority = "100"; };
+        window = { };
+        window_empty = { };
+        more = { priority = "-1"; alignment = "right"; };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
+
+    prompt = {
+
+      type = "root";
+      placement = "bottom";
+      position = "100";
+      visible = "always";
+
+      items = {
+        prompt = { priority = "-1"; };
+        prompt_empty = { priority = "-1"; };
+        input = { priority = "10"; };
+      };
+    };
+
+    topic = {
+
+      type = "root";
+      placement = "top";
+      position = "1";
+      visible = "always";
+
+      items = {
+        topicbarstart = { priority = "100"; };
+        topic = { };
+        topic_empty = { };
+        topicbarend = { priority = "100"; alignment = "right"; };
+      };
+    };
+  };
+};
+settings = {
+  core = {
+    real_name = "Evan Carroll";
+    user_name = "ecarroll";
+    nick = "EvanCarroll";
+  };
+  "fe-text" = { actlist_sort = "refnum"; };
+};
+ignores = ( { level = "JOINS PARTS QUITS"; } );
+hilights = (
+  { text = "buu"; nick = "yes"; word = "yes"; },
+  { text = "paid"; nick = "yes"; word = "yes"; },
+  { text = "money"; nick = "yes"; word = "yes"; },
+  { text = "consultant"; nick = "yes"; word = "yes"; },
+  { text = "contractor"; nick = "yes"; word = "yes"; }
+);
+windows = {
+  1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
+  2 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "##Houston";
+        tag = "Freenode";
+      },
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#Houston";
+        tag = "Freenode";
+      },
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#HLUG";
+        tag = "Freenode";
+      },
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#HoustonHackers";
+        tag = "Freenode";
+      }
+    );
+  };
+  3 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "##Socialism";
+        tag = "Freenode";
+      },
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "##Marxism";
+        tag = "Freenode";
+      }
+    );
+  };
+  4 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#PostgreSQL";
+        tag = "Freenode";
+      },
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#PostgreSQL-Lounge";
+        tag = "Freenode";
+      },
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#PostGIS";
+        tag = "Freenode";
+      }
+    );
+  };
+	5 = {
+		items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#cPanel";
+        tag = "Freenode";
+      }
+		);
+	};
+};
+mainwindows = { 2 = { first_line = "1"; lines = "40"; }; };

@@ -1,0 +1,262 @@
+# i3 config file (v4)
+
+default_border pixel 3
+focus_follows_mouse no
+hide_edge_borders none
+
+set $mod Mod4
+set $ws1 "1:code"
+set $ws2 "2:2"
+set $ws3 "3:3"
+set $ws4 "4:4"
+set $ws5 "5:5"
+set $ws6 "6:6"
+set $ws7 "7:gmail"
+set $ws8 "8:reddit"
+set $ws9 "9:media"
+set $ws10 "10:com"
+
+
+set $uri_cp_slack "https://cpanelllc.slack.com/"
+set $uri_discord  "https://discordapp.com/channels/@me"
+set $uri_sechat   "https://chat.stackexchange.com/rooms/179/the-heap--consultancy-"
+set $uri_voice    "https://voice.google.com"
+set $uri_linkedin "https://www.linkedin.com"
+set $uri_fb       "https://www.messenger.com"
+
+set $uri_work_whm   "https://cp-ec1:2087/"
+set $uri_work_cp    "https://cp-ec1:2083/"
+set $uri_work_lunch "https://lunch.cpanel.net/"
+
+set $uri_mail     "https://mail.google.evancarroll.com"
+set $uri_reddit   "https://reddit.com"
+set $uri_yt       "https://youtube.com"
+set $uri_search   "https://duckduckgo.com"
+
+bindsym $mod+bracketright move workspace to output right
+bindsym $mod+bracketleft move workspace to output left
+
+set $browser     chromium
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+bindsym $mod+y [title="YouTube"] focus
+
+bindsym $mod+Tab workspace back_and_forth
+
+bindsym Control+mod1+Delete exec xscreensaver-command -lock
+
+bindsym $mod+Return exec i3-sensible-terminal
+
+font Hack 8
+
+floating_modifier $mod
+
+assign [class="^kitty$" instance="^__code__"]                          → $ws1
+
+## title = page, instance = app
+##for_window [window_role="^browser$" title="me@evancarroll.com - Evancarroll.com Mail"] move to workspace $ws7
+assign [window_role="^browser$" title="me@evancarroll.com - Evancarroll.com Mail"] → $ws7
+assign [window_role="^browser$" instance="^reddit.com"]            → $ws8
+assign [window_role="^browser$" title="reddit"]                    → $ws8
+
+assign [class="^vlc$"]                                             → $ws9
+assign [class="^ProjectM"]                                         → $ws9
+assign [window_role="^browser$" title="YouTube"]                   → $ws9
+assign [window_role="^browser$" title="Google Play Music"]         → $ws9
+## assign [window_role="^browser$" title="chat.stackexchange.com"]    → $ws10
+## assign [window_role="^browser$" title="Voice - "]                  → $ws10
+## assign [window_role="^browser$" title="Slack"]                     → $ws10
+## assign [window_role="^browser$" title="Discord"]                   → $ws10
+assign [instance="^Signal$"]                                       → $ws10
+assign [instance="^Mail$"]                                         → $ws10
+
+exec i3-msg 'workspace $ws10; layout stacked; workspace back_and_forth'
+
+for_window [class="^kitty$" instance="^__scratch__"] move scratchpad, border pixel 4
+for_window [class="Signal"] border pixel 0
+for_window [class="vlc"] border none
+for_window [class="ProjectM"] border none
+for_window [class="^Chromium-browser$" title="^youtube.com"] move to workspace $ws9, border none
+for_window [class="^Chromium-browser$" title="chat.stackexchange.com" workspace=9] border none
+for_window [class="^kitty$" instance="^__irssi__"] move to workspace $ws10
+for_window [class="^kitty$" instance="^__news__"] move to workspace $ws10
+
+exec kitty --name="__scratch__" bash -c "rax2"
+exec kitty --name="__irssi__"   bash -c "tmux new-session -A -s com 'irssi'"
+exec kitty --name="__code__"    bash -c "tmux new-session -A -s code"
+exec kitty --name="__news__"    bash -c "tmux new-session -A -s news 'newsboat'"
+exec thunderbird
+bindsym $mod+n scratchpad show
+
+## exec $browser --new-window $uri_yt
+## exec $browser --new-window $uri_mail
+## exec $browser --new-window $uri_reddit
+## exec $browser --new-window $uri_cp_slack $uri_discord $uri_sechat $uri_voice
+exec --no-startup-id signal-desktop
+exec --no-startup-id vlc
+exec --no-startup-id xfce4-power-manager
+exec --no-startup-id projectM-pulseaudio
+
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec dmenu_run
+bindsym $mod+Print exec xfce4-screenshooter
+
+
+bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute      exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+# bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+# bindsym XF86MonBrightnessUp   exec brightnessctl set +5%
+bindsym XF86MonBrightnessUp   exec xbacklight -inc 20
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20
+bindsym XF86AudioPlay         exec playerctl play-pause
+bindsym XF86AudioNext         exec playerctl next
+bindsym XF86AudioPrev         exec playerctl previous
+
+
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# change focus, and move
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down [title="^DevTools -"] move scratchpad
+bindsym $mod+Up [title="^DevTools -"] scratchpad show
+bindsym $mod+Shift+Down floating toggle
+bindsym $mod+Right focus right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+#bindsym $mod+h split h
+bindsym $mod+v split v
+bindsym $mod+Shift+v split h
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+#bindsym $mod+a focus parent
+#bindsym $mod+d focus child
+
+
+bindsym $mod+Shift+R exec i3-input -F 'rename workspace to "%s"' -P 'Rename workspace: '
+
+mode "apps" {
+	bindsym p exec --no-startup-id projectM-pulseaudio, mode "default"
+	bindsym v exec --no-startup-id vlc, mode "default"
+	bindsym m exec --no-startup-id vlc, exec --no-startup-id projectM-pulseaudio; mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+a mode "apps"
+
+
+mode "i3modes" {
+	## Diruptives are caps
+	bindsym Shift+R restart , mode "default"
+	bindsym Shift+E exit
+
+	bindsym r reload  , mode "default"
+	#bindsym l exec --no-startup-id i3lock -i /home/ecarroll/Pictures/ohm.png, mode "default"
+	bindsym l exec --no-startup-id xscreensaver-command -lock, mode "default"
+	#bindsym s exec --no-startup-id systemctl suspend -f -i, mode "default"
+	bindsym s exec --no-startup-id xscreensaver-command -lock, exec --no-startup-id systemctl suspend -i, mode "default"
+	bindsym e exec "gvim ~/.config/i3/config"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+i mode "i3modes"
+
+mode "resize" {
+	# Pressing left will shrink the window’s width.
+	# Pressing right will grow the window’s width.
+	# Pressing up will shrink the window’s height.
+	# Pressing down will grow the window’s height.
+	bindsym h resize shrink width 10 px or 10 ppt
+	bindsym j resize grow height 10 px or 10 ppt
+	bindsym k resize shrink height 10 px or 10 ppt
+	bindsym l resize grow width 10 px or 10 ppt
+
+	# same bindings, but for the arrow keys
+	bindsym Left resize shrink width 10 px or 10 ppt
+	bindsym Down resize grow height 10 px or 10 ppt
+	bindsym Up resize shrink height 10 px or 10 ppt
+	bindsym Right resize grow width 10 px or 10 ppt
+
+	# back to normal: Enter or Escape or $mod+r
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	bindsym $mod+r mode "default"
+}
+bindsym $mod+r mode "resize"
+
+mode "browser" {
+	bindsym b exec $browser, mode "default"
+	bindsym a exec $browser --new-window, $uri_search, mode "default"
+	bindsym s exec $browser --incognito, mode "default"
+	bindsym m exec $browser --new-window $uri_mail, mode "default"
+	bindsym r exec $browser --new-window $uri_reddit, mode "default"
+	bindsym c exec $browser --new-window $uri_cp_slack $uri_discord $uri_sechat $uri_voice $uri_fb $uri_linkedin, mode "default"
+	bindsym y exec $browser --new-window $uri_yt, mode "default"
+	bindsym w exec $browser --new-window $uri_work_whm $uri_work_cp $uri_work_lunch
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+b mode "browser"
+
+mode "console" {
+	bindsym s exec kitty --name"=__scratch__" bash -c "rax2", mode "default"
+	bindsym i exec kitty --name="__irssi__"   bash -c "tmux new-session -A -s com 'irssi'", mode "default"
+	bindsym c exec kitty --name="__code__"    bash -c "tmux new-session -A -s code", mode "default"
+	bindsym n exec kitty --name="__news__"    bash -c "tmux new-session -A -s news", mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+c mode "console"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+	status_command i3status
+	strip_workspace_numbers yes
+}
