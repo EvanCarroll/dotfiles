@@ -5,6 +5,7 @@ manyFiles = true
 
 [core]
 untrackedCache = true
+editor = vim
 
 [user]
 name = Evan Carroll
