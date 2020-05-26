@@ -16,24 +16,6 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-if [ -d "$HOME/.cargo/bin" ] ; then
-    PATH="$HOME/.cargo/bin:$PATH"
-fi
-
-if [ -d "$HOME/perl5/bin" ] ; then
-    PATH="$HOME/perl5/bin:$PATH"
-fi
-
-
 if [ ! -S ~/.ssh/ssh_auth_sock ]; then
 	eval `ssh-agent`
 	ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
@@ -41,5 +23,3 @@ if [ ! -S ~/.ssh/ssh_auth_sock ]; then
 fi
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 ssh-add -l > /dev/null || ssh-add
-
-. ~/.promptline.sh

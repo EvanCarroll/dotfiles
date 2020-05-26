@@ -1,5 +1,5 @@
 emulate sh
-. ~/.profile
+	. ~/.profile
 emulate zsh
 
 systemctl --user import-environment
