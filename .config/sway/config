@@ -95,6 +95,9 @@ exec --no-startup-id vlc
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id projectM-pulseaudio
 
+bindsym $mod+bracketright move workspace to output right
+bindsym $mod+bracketleft move workspace to output left
+
 # Multimedia
 bindsym --locked XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym --locked XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
