@@ -113,7 +113,9 @@ bindsym $mod+n scratchpad show
 ## exec $browser --new-window $uri_mail
 ## exec $browser --new-window $uri_reddit
 ## exec $browser --new-window $uri_cp_slack $uri_discord $uri_sechat $uri_voice
-exec --no-startup-id signal-desktop
+
+# https://github.com/signalapp/Signal-Desktop/issues/4291
+exec --no-startup-id signal-desktop --no-sandbox
 exec --no-startup-id vlc
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id projectM-pulseaudio

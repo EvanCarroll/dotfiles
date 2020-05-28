@@ -90,7 +90,9 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
 input type:keyboard xkb_options ctrl:nocaps
 
-exec --no-startup-id signal-desktop
+# Whhe fuck signal https://github.com/signalapp/Signal-Desktop/issues/4291
+exec --no-startup-id signal-desktop --no-sandbox
+
 exec --no-startup-id vlc
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id projectM-pulseaudio
