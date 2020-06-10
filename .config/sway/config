@@ -6,7 +6,6 @@
 
 focus_follows_mouse no
 
-
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 # Home row direction keys, like vim
@@ -64,11 +63,11 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # Example configuration:
 #
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' \
-#               resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
+exec swayidle -w \
+	timeout 180 'swaylock -f -c 000000' \
+	timeout 180 'swaymsg "output * dpms off"' \
+		resume 'swaymsg "output * dpms on"' \
+	before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -110,7 +109,7 @@ bindsym --locked XF86AudioNext        exec --no-startup-id playerctl next
 bindsym --locked XF86AudioPrev        exec --no-startup-id playerctl previous
 
 # Brightness controls
-bindsym --locked XF86MonBrightnessUp exec --no-startup-id light -A 2
+bindsym --locked XF86MonBrightnessUp   exec --no-startup-id light -A 2
 bindsym --locked XF86MonBrightnessDown exec --no-startup-id light -U 2
 
 ## title = page, instance = app
