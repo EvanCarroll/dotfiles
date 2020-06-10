@@ -4,6 +4,7 @@ color darkblue
 
 syntax enable             " enable syntax highlighting (previously syntax on).
 filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
+set rnu                   " Relative line numbering
 set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
 set t_Co=256              " enable 256-color mode.
 set nohlsearch            " Don't continue to highlight searched phrases.
@@ -12,7 +13,6 @@ set autoindent            " auto-indent
 set tabstop=2             " tab spacing
 set shiftwidth=0          " indent/outdent by 4 columns
 set shiftround            " always indent/outdent to the nearest tabstop
-"set expandtab             " use spaces instead of tabs
 set smarttab              " use tabs at the start of a line, spaces elsewhere
 set mouse=a               " enable mouse in all modes
 set fileencoding=utf-8
