@@ -301,6 +301,7 @@ mode "console" {
 	bindsym i exec kitty --title="__irssi__"   bash -c "tmux new-session -A -s com 'irssi'", mode "default"
 	bindsym c exec kitty --title="__code__"    bash -c "tmux new-session -A -s code", mode "default"
 	bindsym n exec kitty --title="__news__"    bash -c "tmux new-session -A -s news", mode "default"
+	bindsym x exec kitty -o "linux_display_server=x11"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
