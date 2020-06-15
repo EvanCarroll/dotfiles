@@ -1,10 +1,5 @@
 ﻿let &t_ut='' " https://sw.kovidgoyal.net/kitty/faq.html
 
-color darkblue
-
-syntax enable             " enable syntax highlighting (previously syntax on).
-filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
-set rnu                   " Relative line numbering
 set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
 set t_Co=256              " enable 256-color mode.
 set nohlsearch            " Don't continue to highlight searched phrases.
@@ -14,9 +9,11 @@ set tabstop=2             " tab spacing
 set shiftwidth=0          " indent/outdent by 4 columns
 set shiftround            " always indent/outdent to the nearest tabstop
 set smarttab              " use tabs at the start of a line, spaces elsewhere
+set relativenumber        " Relative line numbering
 set mouse=a               " enable mouse in all modes
 set fileencoding=utf-8
 set fileformat=unix
+set foldmethod=syntax
 
 " without this, SpellBad is messed up. This causes problem with Syntastic.
 " we can fix this problem otherwise by
@@ -26,7 +23,7 @@ set fileformat=unix
 " set background=dark
 
 
-let g:hardtime_default_on = 1
+" let g:hardtime_default_on = 1
 let g:vista#renderer#enable_icon = 1
 let g:airline_theme = 'powerlineish'
 let g:ale_completion_enabled = 1
@@ -35,7 +32,7 @@ let g:ale_rust_rustfmt_executable  = '/home/ecarroll/.cargo/bin/rustfmt'
 let g:ale_fix_on_save = 1
 set omnifunc=ale#completion#OmniFunc
 
-" let g:ale_rust_rustfmt_options = '--config control_brace_style=ClosingNextLine'
+let g:ale_rust_rustfmt_options = '--config hard_tabs=true,control_brace_style=ClosingNextLine'
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -61,7 +58,6 @@ let g:airline#extensions#ale#enabled = 1
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'rust-lang/rust.vim'
 Plug 'liuchengxu/vista.vim'
 Plug 'vim-scripts/vis'
 Plug 'edkolev/promptline.vim'
@@ -79,13 +75,6 @@ Plug 'dense-analysis/ale'
 
 call plug#end()
 
-set foldmethod=syntax
-augroup javascript_folding
-    au!
-    au FileType javascript setlocal foldmethod=syntax
-augroup END
-
-
 nnoremap <F2> :TagbarToggle<CR>
 nnoremap <F3> :SyntasticToggleMode<CR>
 nnoremap <F4> :HardTimeToggle<CR>
@@ -99,3 +88,8 @@ nnoremap <C-s> :w<cr>
 autocmd BufNewFile,BufRead *.t   set filetype=perl
 autocmd BufNewFile,BufRead *.asm set filetype=nasm
 autocmd FileType typescript setlocal suffixesadd+=.ts,.mjs
+
+set background=dark
+color darkblue
+syntax enable             " enable syntax highlighting (previously syntax on).
+filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
