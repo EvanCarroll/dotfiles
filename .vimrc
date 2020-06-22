@@ -1,5 +1,4 @@
 ﻿let &t_ut='' " https://sw.kovidgoyal.net/kitty/faq.html
-
 set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
 set t_Co=256              " enable 256-color mode.
 set nohlsearch            " Don't continue to highlight searched phrases.
@@ -24,6 +23,7 @@ set foldmethod=syntax
 
 
 " let g:hardtime_default_on = 1
+let g:rust_recommended_style=0
 let g:vista#renderer#enable_icon = 1
 let g:airline_theme = 'powerlineish'
 let g:ale_completion_enabled = 1
@@ -57,22 +57,20 @@ let g:airline#extensions#ale#enabled = 1
 
 
 call plug#begin('~/.vim/plugged')
-
-Plug 'liuchengxu/vista.vim'
-Plug 'vim-scripts/vis'
-Plug 'edkolev/promptline.vim'
-Plug 'edkolev/tmuxline.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'takac/vim-hardtime'
-Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'dense-analysis/ale'
-
+	Plug 'liuchengxu/vista.vim'
+	Plug 'vim-scripts/vis'
+	Plug 'edkolev/promptline.vim'
+	Plug 'edkolev/tmuxline.vim'
+	Plug 'vim-airline/vim-airline'
+	Plug 'vim-airline/vim-airline-themes'
+	Plug 'tpope/vim-fugitive'
+	Plug 'tpope/vim-surround'
+	Plug 'takac/vim-hardtime'
+	Plug 'junegunn/vim-easy-align'
+	Plug 'junegunn/fzf'
+	Plug 'junegunn/fzf.vim'
+	Plug 'scrooloose/nerdtree'
+	Plug 'dense-analysis/ale'
 call plug#end()
 
 nnoremap <F2> :TagbarToggle<CR>
