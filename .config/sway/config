@@ -89,7 +89,7 @@ exec swayidle -w \
 
 input type:keyboard xkb_options ctrl:nocaps
 
-# Whhe fuck signal https://github.com/signalapp/Signal-Desktop/issues/4291
+# Why fuck signal https://github.com/signalapp/Signal-Desktop/issues/4291
 exec --no-startup-id signal-desktop --no-sandbox
 
 exec --no-startup-id vlc
@@ -221,8 +221,8 @@ assign [app_id="^kitty$" title="^__news__$"]   → $ws10
     bindsym $mod+v       splitv
 
     # Switch the current container between different layout styles
-    bindsym $mod+s layout stacking
     bindsym $mod+w layout tabbed
+    bindsym $mod+Shift+w layout stacking
     bindsym $mod+e layout toggle split
 
     # Make the current focus fullscreen
@@ -285,6 +285,8 @@ bindsym $mod+a mode "apps"
 
 mode "power" {
 	bindsym s exec --no-startup-id systemctl suspend, mode "default"
+	bindsym p exec --no-startup-id sudo cpupower frequency-set -g performance, mode "default"
+	bindsym e exec --no-startup-id sudo cpupower frequency-set -g powersave, mode "default"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
@@ -314,6 +316,13 @@ mode "console" {
 	bindsym Escape mode "default"
 }
 bindsym $mod+c mode "console"
+
+mode "sway" {
+	bindsym	h exec swaymsg output eDP-1 pos 0 0 res 1920x1080, mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+s mode "sway"
 
 #
 # Status Bar:
