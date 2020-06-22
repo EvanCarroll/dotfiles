@@ -15,7 +15,7 @@ set $up      k
 set $right   l
 # Your preferred terminal emulator
 set $term    kitty
-set $browser chromium
+set $browser chromium --disable-gpu-driver-bug-workarounds
 set $ws1     "1:code"
 set $ws2     "2"
 set $ws3     "3"
