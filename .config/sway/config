@@ -12,6 +12,7 @@ hide_edge_borders none
 
 set $term    kitty
 set $browser chromium --disable-gpu-driver-bug-workarounds --new-window
+set $menu    dmenu_path | dmenu | xargs swaymsg exec --
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
@@ -97,11 +98,6 @@ bindsym $mod+Tab         workspace back_and_forth
 # focus the parent container
 #bindsym $mod+a focus parent
 #bindsym $mod+d focus child
-
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
 ### Output configuration
 #
