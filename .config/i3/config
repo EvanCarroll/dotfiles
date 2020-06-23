@@ -13,7 +13,8 @@ set $browser chromium --new-window
 set $menu    i3-dmenu-desktop
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
-bindsym $mod+d exec $menu
+bindsym $mod+d exec --no-startup-id $menu
+
 
 set $left    h
 set $down    j
@@ -132,11 +133,6 @@ for_window [class="^Chromium-browser$" title="^youtube.com"] move to workspace $
 for_window [class="^Chromium-browser$" title="chat.stackexchange.com" workspace=9] border none
 for_window [class="^kitty$" instance="^__irssi__"] move to workspace $ws10
 for_window [class="^kitty$" instance="^__news__"] move to workspace $ws10
-
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 bindsym $mod+Down [title="^DevTools -"] move scratchpad
 bindsym $mod+Up [title="^DevTools -"] scratchpad show
