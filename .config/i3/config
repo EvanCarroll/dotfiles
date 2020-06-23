@@ -196,7 +196,7 @@ mode "console" {
 bindsym $mod+c mode "console"
 
 # Maybe some day, I won't *have* to use i3
-mode "sway" {
+mode "window_manager" {
 	## Disruptives use capitals
 	bindsym Shift+r restart , mode "default"
 	bindsym Shift+e exit
@@ -211,7 +211,7 @@ mode "sway" {
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
-bindsym $mod+s mode "sway"
+bindsym $mod+BackSpace mode "window_manager"
 
 
 bar {

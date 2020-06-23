@@ -75,13 +75,13 @@ bindsym $mod+Shift+9       move container to workspace $ws9
 bindsym $mod+Shift+0       move container to workspace $ws10
 bindsym $mod+bracketright  move workspace to output right
 bindsym $mod+bracketleft   move workspace to output left
-bindsym --locked XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym --locked XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym --locked XF86AudioMute        exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ toggle
-bindsym --locked XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym --locked XF86AudioPlay        exec --no-startup-id playerctl play-pause
-bindsym --locked XF86AudioNext        exec --no-startup-id playerctl next
-bindsym --locked XF86AudioPrev        exec --no-startup-id playerctl previous
+bindsym --locked XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym --locked XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym --locked XF86AudioMute         exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioMicMute      exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym --locked XF86AudioPlay         exec --no-startup-id playerctl play-pause
+bindsym --locked XF86AudioNext         exec --no-startup-id playerctl next
+bindsym --locked XF86AudioPrev         exec --no-startup-id playerctl previous
 bindsym --locked XF86MonBrightnessUp   exec --no-startup-id light -A 2
 bindsym --locked XF86MonBrightnessDown exec --no-startup-id light -U 2
 bindsym $mod+f       fullscreen
@@ -216,7 +216,7 @@ mode "console" {
 }
 bindsym $mod+c mode "console"
 
-mode "sway" {
+mode "window_manager" {
 	## Disruptives use capitals
 	bindsym Shift+r restart , mode "default"
 	bindsym Shift+e exit
@@ -227,7 +227,7 @@ mode "sway" {
 	bindsym Escape mode "default"
 
 }
-bindsym $mod+s mode "sway"
+bindsym $mod+BackSpace mode "window_manager"
 
 bar {
 	position bottom
