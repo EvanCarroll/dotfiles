@@ -1,4 +1,16 @@
-﻿let &t_ut='' " https://sw.kovidgoyal.net/kitty/faq.html
+﻿" without this, SpellBad is messed up. This causes problem with Syntastic.
+" we can fix this problem otherwise by
+" http://stackoverflow.com/a/6009026/124486
+" or, http://stackoverflow.com/q/17677441/124486
+" set background=light
+" set background=dark
+
+set background=dark
+color delek
+
+syntax enable             " enable syntax highlighting (previously syntax on).
+filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
+let &t_ut=''              " https://sw.kovidgoyal.net/kitty/faq.html
 set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
 set t_Co=256              " enable 256-color mode.
 set nohlsearch            " Don't continue to highlight searched phrases.
@@ -14,18 +26,16 @@ set fileencoding=utf-8
 set fileformat=unix
 set foldmethod=syntax
 
-" without this, SpellBad is messed up. This causes problem with Syntastic.
-" we can fix this problem otherwise by
-" http://stackoverflow.com/a/6009026/124486
-" or, http://stackoverflow.com/q/17677441/124486
-" set background=light
-" set background=dark
 
 
 " let g:hardtime_default_on = 1
 let g:rust_recommended_style=0
 let g:vista#renderer#enable_icon = 1
 let g:airline_theme = 'powerlineish'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:ale_completion_enabled = 1
 let g:ale_rust_analyzer_executable = '/home/ecarroll/.local/bin/rust-analyzer'
 let g:ale_rust_rustfmt_executable  = '/home/ecarroll/.cargo/bin/rustfmt'
@@ -57,12 +67,12 @@ let g:airline#extensions#ale#enabled = 1
 
 
 call plug#begin('~/.vim/plugged')
+	Plug 'vim-airline/vim-airline'
+	Plug 'vim-airline/vim-airline-themes'
 	Plug 'liuchengxu/vista.vim'
 	Plug 'vim-scripts/vis'
 	Plug 'edkolev/promptline.vim'
 	Plug 'edkolev/tmuxline.vim'
-	Plug 'vim-airline/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-surround'
 	Plug 'takac/vim-hardtime'
@@ -86,8 +96,3 @@ nnoremap <C-s> :w<cr>
 autocmd BufNewFile,BufRead *.t   set filetype=perl
 autocmd BufNewFile,BufRead *.asm set filetype=nasm
 autocmd FileType typescript setlocal suffixesadd+=.ts,.mjs
-
-set background=dark
-color darkblue
-syntax enable             " enable syntax highlighting (previously syntax on).
-filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
