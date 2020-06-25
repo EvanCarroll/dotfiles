@@ -208,6 +208,9 @@ mode "window_manager" {
 	#bindsym s exec --no-startup-id systemctl suspend -f -i, mode "default"
 	bindsym s exec --no-startup-id xscreensaver-command -lock, exec --no-startup-id systemctl suspend -i, mode "default"
 	bindsym e exec "gvim ~/.config/i3/config"
+	bindsym Shift+$left  exec xrandr --output DP-1 --left-of eDP-1, mode "default"
+	bindsym Shift+$right exec xrandr --output DP-1 --right-of eDP-1, mode "default"
+
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
