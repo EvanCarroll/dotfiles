@@ -177,7 +177,7 @@ mode "browser" {
 	bindsym s exec $browser --incognito, mode "default"
 	bindsym m exec $browser $uri_mail, mode "default"
 	bindsym r exec $browser $uri_reddit, mode "default"
-	bindsym c exec $browser $url_slack_webpros $uri_discord $uri_sechat $uri_voice $uri_fb $uri_linkedin, mode "default"
+	bindsym c exec $browser $uri_slack_webpros $uri_discord $uri_sechat $uri_voice $uri_fb $uri_linkedin, mode "default"
 	bindsym y exec $browser $uri_yt, mode "default"
 	bindsym w exec $browser $uri_work_whm $uri_work_cp $uri_work_lunch, mode "default"
 	bindsym Return mode "default"
