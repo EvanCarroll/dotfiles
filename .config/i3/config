@@ -74,7 +74,7 @@ bindsym $mod+Shift+9      move container to workspace $ws9
 bindsym $mod+Shift+0      move container to workspace $ws10
 bindsym $mod+bracketright move workspace to output right
 bindsym $mod+bracketleft  move workspace to output left
-bindsym XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ off; exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute         exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute      exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
@@ -136,7 +136,6 @@ for_window [class="^kitty$" instance="^__news__"] move to workspace $ws10
 
 bindsym $mod+Down [title="^DevTools -"] move scratchpad
 bindsym $mod+Up [title="^DevTools -"] scratchpad show
-bindsym $mod+Shift+Down floating toggle
 bindsym $mod+Right focus right
 
 bindsym $mod+Shift+R exec i3-input -F 'rename workspace to "%s"' -P 'Rename workspace: '
