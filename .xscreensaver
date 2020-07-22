@@ -1,0 +1,26 @@
+# XScreenSaver Preferences File
+# Written by xscreensaver-demo 5.42 for ecarroll on Wed Jul 22 02:22:05 2020.
+# https://www.jwz.org/xscreensaver/
+
+timeout:	0:05:00
+cycle:		0:10:00
+lock:		True
+lockTimeout:	0:00:00
+passwdTimeout:	0:00:30
+visualID:	default
+installColormap:    True
+verbose:	False
+timestamp:	True
+splash:		False
+nice:		10
+memoryLimit:	0
+fade:		False
+unfade:		False
+dpmsEnabled:	True
+dpmsQuickOff:	True
+dpmsStandby:	2:00:00
+dpmsSuspend:	2:00:00
+dpmsOff:	4:00:00
+
+mode:		blank
+selected:	-1
