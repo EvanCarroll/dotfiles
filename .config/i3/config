@@ -162,15 +162,6 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-mode "power" {
-	bindsym s exec --no-startup-id systemctl suspend, mode "default"
-	bindsym p exec --no-startup-id sudo cpupower frequency-set -g performance, mode "default"
-	bindsym e exec --no-startup-id sudo cpupower frequency-set -g powersave, mode "default"
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
-}
-bindsym $mod+p mode "power"
-
 mode "browser" {
 	bindsym b exec $browser, mode "default"
 	bindsym a exec $browser $uri_search, mode "default"
@@ -215,6 +206,31 @@ mode "window_manager" {
 	bindsym Escape mode "default"
 }
 bindsym $mod+BackSpace mode "window_manager"
+
+mode "power" {
+	bindsym s exec --no-startup-id systemctl suspend, mode "default"
+	bindsym p exec --no-startup-id sudo cpupower frequency-set -g performance, mode "default"
+	bindsym e exec --no-startup-id sudo cpupower frequency-set -g powersave, mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "bluetooth" {
+	# cowin
+	bindsym c       exec --no-startup-id bluetoothctl connect    FC:58:FA:B9:10:64, mode "default"
+	bindsym Shift+c exec --no-startup-id bluetoothctl disconnect FC:58:FA:B9:10:64, mode "default"
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "system" {
+	bindsym b mode "bluetooth"
+	bindsym p mode "power"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+s mode "system"
 
 
 bar {
