@@ -31,7 +31,6 @@ set $ws8   "8:reddit"
 set $ws9   "9:media"
 set $ws10  "10:com"
 set $uri_slack_webpros "https://webpros.slack.com/"
-set $uri_slack_cp      "https://cpanelllc.slack.com/"
 set $uri_discord       "https://discordapp.com/channels/@me"
 set $uri_sechat        "https://chat.stackexchange.com/rooms/179/the-heap--consultancy-"
 set $uri_voice         "https://voice.google.com"
@@ -44,6 +43,7 @@ set $uri_mail          "https://mail.google.evancarroll.com"
 set $uri_reddit        "https://reddit.com"
 set $uri_yt            "https://youtube.com"
 set $uri_search        "https://duckduckgo.com"
+set $bt_cowin          "FC:58:FA:B9:10:64"
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -217,8 +217,8 @@ mode "power" {
 
 mode "bluetooth" {
 	# cowin
-	bindsym c       exec --no-startup-id bluetoothctl connect    FC:58:FA:B9:10:64, mode "default"
-	bindsym Shift+c exec --no-startup-id bluetoothctl disconnect FC:58:FA:B9:10:64, mode "default"
+	bindsym c       exec --no-startup-id bluetoothctl connect    $bt_cowin, mode "default"
+	bindsym Shift+c exec --no-startup-id bluetoothctl disconnect $bt_cowin, mode "default"
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
