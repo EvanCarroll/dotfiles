@@ -140,11 +140,21 @@ bindsym $mod+Right focus right
 
 bindsym $mod+Shift+R exec i3-input -F 'rename workspace to "%s"' -P 'Rename workspace: '
 
+mode "kill" {
+	bindsym v exec killall -s 9 vlc, mode "default"
+	bindsym d exec killall -s 9 Discord, mode "default"
+	bindsym r exec killall -s 9 ranger, mode "default"
+	bindsym z exec killall -s 9 zoom, mode "default"
+	bindsym o exec killall -s 9 obs, mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
 mode "apps" {
 	bindsym p exec --no-startup-id projectM-pulseaudio, mode "default"
 	bindsym v exec --no-startup-id vlc, mode "default"
-	bindsym x exec killall -s 9 vlc, mode "default"
 	bindsym m exec --no-startup-id vlc, exec --no-startup-id projectM-pulseaudio; mode "default"
+	bindsym x mode "kill"
+	bindsym k mode "kill"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
