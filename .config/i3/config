@@ -79,8 +79,14 @@ bindsym XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAUL
 bindsym XF86AudioMute         exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute      exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindsym XF86AudioPlay         exec --no-startup-id playerctl play-pause
+# XF86AudioPause bound to FN+p by bios on thinkpad
+bindsym Pause                 exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext         exec --no-startup-id playerctl next
 bindsym XF86AudioPrev         exec --no-startup-id playerctl previous
+bindsym $mod+Up               exec --no-startup-id playerctl play-pause
+bindsym $mod+Right            exec --no-startup-id playerctl next
+bindsym $mod+Left             exec --no-startup-id playerctl previous
+bindsym $mod+Down             exec --no-startup-id playerctl stop
 bindsym XF86MonBrightnessUp   exec --no-startup-id light -A 2
 bindsym XF86MonBrightnessDown exec --no-startup-id light -U 2
 bindsym $mod+Print   exec xfce4-screenshooter
@@ -134,9 +140,9 @@ for_window [class="^Chromium-browser$" title="chat.stackexchange.com" workspace=
 for_window [class="^kitty$" instance="^__irssi__"] move to workspace $ws10
 for_window [class="^kitty$" instance="^__news__"] move to workspace $ws10
 
-bindsym $mod+Down [title="^DevTools -"] move scratchpad
-bindsym $mod+Up [title="^DevTools -"] scratchpad show
-bindsym $mod+Right focus right
+#bindsym $mod+Down [title="^DevTools -"] move scratchpad
+#bindsym $mod+Up [title="^DevTools -"] scratchpad show
+#bindsym $mod+Right focus right
 
 bindsym $mod+Shift+R exec i3-input -F 'rename workspace to "%s"' -P 'Rename workspace: '
 
@@ -208,9 +214,14 @@ mode "window_manager" {
 	bindsym l exec --no-startup-id xscreensaver-command -lock, mode "default"
 	#bindsym s exec --no-startup-id systemctl suspend -f -i, mode "default"
 	bindsym s exec --no-startup-id xscreensaver-command -lock, exec --no-startup-id systemctl suspend -i, mode "default"
-	bindsym e exec "gvim ~/.config/i3/config"
-	bindsym Shift+$left  exec xrandr --output DP-1 --left-of eDP-1, mode "default"
-	bindsym Shift+$right exec xrandr --output DP-1 --right-of eDP-1, mode "default"
+	bindsym e exec "gvim ~/.config/i3/config", mode "default"
+
+	# just point to the external monitor, will work only if one is installed
+	# down turns off, up turns on
+	bindsym Up    exec xrandr --auto
+	bindsym Left  exec xrandr --output "$(xrandr | sed -ne'/eDP-1/d' -e's/ connected.*//p')" --left-of  eDP-1, mode "default"
+	bindsym Right exec xrandr --output "$(xrandr | sed -ne'/eDP-1/d' -e's/ connected.*//p')" --right-of eDP-1, mode "default"
+	bindsym Down  exec xrandr --output "$(xrandr | sed -ne'/eDP-1/d' -e's/ connected.*//p')" --off, mode "default"
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
