@@ -75,7 +75,7 @@ export ZSH="/home/ecarroll/.oh-my-zsh"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git ng vi-mode cargo fancy-ctrl-z per-directory-history z)
+plugins=(git ng vi-mode cargo fancy-ctrl-z per-directory-history z kubectl minikube)
 
 source $ZSH/oh-my-zsh.sh
 #source ~/.promptline.sh
