@@ -8,7 +8,7 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-if [ "$TERM" = "xterm-kitty" ]; then
+if [[ "$TERM" = "xterm-kitty" || -n "$KITTY_WINDOW_ID" ]]; then
 	alias ssh="kitty +kitten ssh"
 fi
 
@@ -32,6 +32,6 @@ ssh-add -l > /dev/null || ssh-add
 #   exec startx
 # fi
 
-if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-  exec startx
-fi
+# if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+#   exec startx
+# fi
