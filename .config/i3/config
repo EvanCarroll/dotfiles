@@ -193,7 +193,7 @@ mode "browser" {
 bindsym $mod+b mode "browser"
 
 mode "console" {
-	bindsym s exec $term --name"=__scratch__" bash -c "rax2", mode "default"
+	bindsym s exec $term --name"=__scratch__" rax2 -l, mode "default"
 	bindsym i exec $term --name="__irssi__"   bash -c "tmux new-session -A -s com 'irssi'", mode "default"
 	bindsym c exec $term --name="__code__"    bash -c "tmux new-session -A -s code", mode "default"
 	bindsym n exec $term --name="__news__"    bash -c "tmux new-session -A -s news", mode "default"
@@ -232,6 +232,8 @@ mode "power" {
 	bindsym s exec --no-startup-id systemctl suspend, mode "default"
 	bindsym p exec --no-startup-id sudo cpupower frequency-set -g performance, mode "default"
 	bindsym e exec --no-startup-id sudo cpupower frequency-set -g powersave, mode "default"
+	bindsym b exec --no-startup-id bluetoothctl power on, mode "default"
+	bindsym Shift+B exec --no-startup-id bluetoothctl power off, mode "default"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
@@ -269,7 +271,7 @@ exec --no-startup-id signal-desktop --no-sandbox
 exec --no-startup-id vlc
 exec --no-startup-id projectM-pulseaudio
 exec thunderbird
-exec kitty --name="__scratch__" bash -c "rax2"
+exec kitty --name="__scratch__" bash -c "rax2 -l"
 exec kitty --name="__irssi__"   bash -c "tmux new-session -A -s com 'irssi'"
 exec kitty --name="__code__"    bash -c "tmux new-session -A -s code"
 exec kitty --name="__news__"    bash -c "tmux new-session -A -s news 'newsboat'"
