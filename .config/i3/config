@@ -15,7 +15,6 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id $menu
 
-
 set $left    h
 set $down    j
 set $up      k
@@ -27,8 +26,8 @@ set $ws4   "4"
 set $ws5   "5"
 set $ws6   "6"
 set $ws7   "7:gmail"
-set $ws8   "8:reddit"
-set $ws9   "9:media"
+set $ws8   "8:youtube"
+set $ws9   "9:obs"
 set $ws10  "10:com"
 set $uri_slack_webpros "https://webpros.slack.com/"
 set $uri_discord       "https://discordapp.com/channels/@me"
@@ -43,7 +42,9 @@ set $uri_mail          "https://mail.google.evancarroll.com"
 set $uri_reddit        "https://reddit.com"
 set $uri_yt            "https://youtube.com"
 set $uri_search        "https://duckduckgo.com"
-set $bt_cowin          "FC:58:FA:B9:10:64"
+set $bt_cowin          "$(bluetoothctl devices | grep -F 'COWIN E9'   | cut -f 2 -d ' ')"
+set $bt_q5k            "$(bluetoothctl devices | grep -F 'Qudelix-5K' | cut -f 2 -d ' ')"
+set $bt_lenovo         "$(bluetoothctl devices | grep -F 'Lenovo 700 BT Speaker' | cut -f 2 -d ' ')"
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -115,13 +116,13 @@ assign [class="^kitty$" instance="^__code__"]                          → $ws1
 ## title = page, instance = app
 ##for_window [window_role="^browser$" title="me@evancarroll.com - Evancarroll.com Mail"] move to workspace $ws7
 assign [window_role="^browser$" title="me@evancarroll.com - Evancarroll.com Mail"] → $ws7
-assign [window_role="^browser$" instance="^reddit.com"]            → $ws8
-assign [window_role="^browser$" title="reddit"]                    → $ws8
+assign [window_role="^browser$" instance="^reddit.com"]            → $ws7
+assign [window_role="^browser$" title="reddit"]                    → $ws7
 
-assign [class="^vlc$"]                                             → $ws9
-assign [class="^ProjectM"]                                         → $ws9
-assign [window_role="^browser$" title="YouTube"]                   → $ws9
-assign [window_role="^browser$" title="Google Play Music"]         → $ws9
+assign [class="^vlc$"]                                             → $ws8
+assign [class="^ProjectM"]                                         → $ws8
+assign [window_role="^browser$" title="YouTube"]                   → $ws8
+assign [window_role="^browser$" title="Google Play Music"]         → $ws8
 ## assign [window_role="^browser$" title="chat.stackexchange.com"]    → $ws10
 ## assign [window_role="^browser$" title="Voice - "]                  → $ws10
 ## assign [window_role="^browser$" title="Slack"]                     → $ws10
@@ -135,7 +136,7 @@ for_window [class="^kitty$" instance="^__scratch__"] move scratchpad, border pix
 for_window [class="Signal"] border pixel 0
 for_window [class="vlc"] border none
 for_window [class="ProjectM"] border none
-for_window [class="^Chromium-browser$" title="^youtube.com"] move to workspace $ws9, border none
+for_window [class="^Chromium-browser$" title="^youtube.com"] move to workspace $ws8, border none
 for_window [class="^Chromium-browser$" title="chat.stackexchange.com" workspace=9] border none
 for_window [class="^kitty$" instance="^__irssi__"] move to workspace $ws10
 for_window [class="^kitty$" instance="^__news__"] move to workspace $ws10
@@ -242,8 +243,12 @@ mode "power" {
 
 mode "bluetooth" {
 	# cowin
-	bindsym c       exec --no-startup-id bluetoothctl connect    $bt_cowin, mode "default"
-	bindsym Shift+c exec --no-startup-id bluetoothctl disconnect $bt_cowin, mode "default"
+	bindsym c       exec --no-startup-id bluetoothctl connect    $bt_cowin,  mode "default"
+	bindsym Shift+C exec --no-startup-id bluetoothctl disconnect $bt_cowin,  mode "default"
+  bindsym q       exec --no-startup-id bluetoothctl connect    $bt_q5k,    mode "default"
+  bindsym Shift+Q exec --no-startup-id bluetoothctl disconnect $bt_q5k,    mode "default"
+  bindsym l       exec --no-startup-id bluetoothctl connect    $bt_lenovo, mode "default"
+  bindsym Shift+L exec --no-startup-id bluetoothctl disconnect $bt_lenovo, mode "default"
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
