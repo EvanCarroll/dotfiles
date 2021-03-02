@@ -10,3 +10,5 @@ editor = vim
 [user]
 name = Evan Carroll
 email = me@evancarroll.com
+[init]
+	defaultBranch = main
