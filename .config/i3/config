@@ -159,6 +159,10 @@ mode "kill" {
 mode "focus" {
 	bindsym y [title="YouTube"] focus, mode "default"
 	bindsym v [title="Voice - "] focus, mode "default"
+	bindsym s [title="Slack"] focus, mode "default"
+	bindsym d [title="Discord"] focus, mode "default"
+	bindsym z [title="Zoom"] focus, mode "default"
+	bindsym Shift+S [title="Signal"] focus, mode "default"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
