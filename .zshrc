@@ -5,9 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH="/home/ecarroll/.oh-my-zsh"
 
@@ -40,7 +37,7 @@ export ZSH="/home/ecarroll/.oh-my-zsh"
 # export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
+DISABLE_MAGIC_FUNCTIONS=true
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -75,7 +72,7 @@ export ZSH="/home/ecarroll/.oh-my-zsh"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git ng vi-mode cargo fancy-ctrl-z per-directory-history z kubectl minikube)
+plugins=(git ng vi-mode cargo fancy-ctrl-z per-directory-history z kubectl minikube rust rustup cargo)
 
 source $ZSH/oh-my-zsh.sh
 #source ~/.promptline.sh
