@@ -8,6 +8,8 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
 if [[ "$TERM" = "xterm-kitty" || -n "$KITTY_WINDOW_ID" ]]; then
 	alias ssh="kitty +kitten ssh"
 fi
