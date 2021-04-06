@@ -1,16 +1,9 @@
-﻿" without this, SpellBad is messed up. This causes problem with Syntastic.
-" we can fix this problem otherwise by
-" http://stackoverflow.com/a/6009026/124486
-" or, http://stackoverflow.com/q/17677441/124486
-" set background=light
-" set background=dark
+﻿source $VIMRUNTIME/defaults.vim " Source the defaults
 
-set background=dark
-color delek
-
-syntax enable             " enable syntax highlighting (previously syntax on).
-filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
 let &t_ut=''              " https://sw.kovidgoyal.net/kitty/faq.html
+set background=dark
+
+filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
 set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
 set t_Co=256              " enable 256-color mode.
 set nohlsearch            " Don't continue to highlight searched phrases.
@@ -42,7 +35,11 @@ let g:ale_rust_rustfmt_executable  = '/home/ecarroll/.cargo/bin/rustfmt'
 let g:ale_fix_on_save = 1
 set omnifunc=ale#completion#OmniFunc
 
-let g:ale_rust_rustfmt_options = '--config hard_tabs=true,control_brace_style=ClosingNextLine'
+let g:ale_rust_rustfmt_options = '--edition 2018 --config hard_tabs=true,control_brace_style=ClosingNextLine'
+" let g:ale_set_highlights = 0
+highlight ALEWarning ctermbg=LightRed
+highlight ALEError   ctermbg=DarkRed
+
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -65,6 +62,14 @@ let g:ale_linters = {
 " let g:ale_perl_perl_options = '-c -Mwarnings -Ilib -It/lib'
 let g:airline#extensions#ale#enabled = 1
 
+let g:LanguageClient_serverCommands = {
+  \ 'rust': ['rust-analyzer'],
+	\ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+	\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+	\ 'python': ['/usr/local/bin/pyls'],
+	\ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+	\ }
+
 
 call plug#begin('~/.vim/plugged')
 	Plug 'vim-airline/vim-airline'
@@ -77,16 +82,26 @@ call plug#begin('~/.vim/plugged')
 	Plug 'tpope/vim-surround'
 	Plug 'takac/vim-hardtime'
 	Plug 'junegunn/vim-easy-align'
-	Plug 'junegunn/fzf'
+	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	Plug 'junegunn/fzf.vim'
 	Plug 'scrooloose/nerdtree'
 	Plug 'dense-analysis/ale'
+	" Plug 'autozimu/LanguageClient-neovim', {
+	" 	\ 'branch': 'next',
+	" 	\ 'do': 'bash install.sh',
+	" 	\ }
 call plug#end()
+
+" note that if you are using Plug mapping you should not use `noremap` mappings.
+nmap <F5> <Plug>(lcn-menu)
+nmap <silent>K <Plug>(lcn-hover)
+nmap <silent> gd <Plug>(lcn-definition)
+nmap <silent> <F2> <Plug>(lcn-rename)
 
 nnoremap <F2> :TagbarToggle<CR>
 nnoremap <F3> :SyntasticToggleMode<CR>
 nnoremap <F4> :HardTimeToggle<CR>
-nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+" nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 set pastetoggle=<F12>
 inoremap <C-s> <esc>:w<cr>                 " save files
 nnoremap <C-s> :w<cr>
@@ -95,4 +110,4 @@ nnoremap <C-s> :w<cr>
 
 autocmd BufNewFile,BufRead *.t   set filetype=perl
 autocmd BufNewFile,BufRead *.asm set filetype=nasm
-autocmd FileType typescript setlocal suffixesadd+=.ts,.mjs
+autocmd FileType typescript setlocal suffixesadd+=.ts,.mjs expandtab
