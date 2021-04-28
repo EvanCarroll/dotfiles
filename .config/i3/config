@@ -88,8 +88,8 @@ bindsym $mod+Up               exec --no-startup-id playerctl play-pause
 bindsym $mod+Right            exec --no-startup-id playerctl next
 bindsym $mod+Left             exec --no-startup-id playerctl previous
 bindsym $mod+Down             exec --no-startup-id playerctl stop
-bindsym XF86MonBrightnessUp   exec --no-startup-id light -A 2
-bindsym XF86MonBrightnessDown exec --no-startup-id light -U 2
+bindsym XF86MonBrightnessUp   exec --no-startup-id light -A "2%"
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U "2%"
 bindsym $mod+Print   exec xfce4-screenshooter
 bindsym $mod+f       fullscreen
 bindsym $mod+Shift+v splith
@@ -161,7 +161,7 @@ mode "focus" {
 	bindsym v [title="Voice - "] focus, mode "default"
 	bindsym s [title="Slack"] focus, mode "default"
 	bindsym d [title="Discord"] focus, mode "default"
-	bindsym z [title="Zoom"] focus, mode "default"
+	bindsym z [title="Zoom Meeting"] focus, mode "default"
 	bindsym Shift+S [title="Signal"] focus, mode "default"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
@@ -249,6 +249,8 @@ mode "power" {
 	bindsym Shift+B exec --no-startup-id bluetoothctl power off, mode "default"
 	bindsym w exec       --no-startup-id /sbin/rfkill unblock wifi, mode "default"
 	bindsym Shift+W exec --no-startup-id /sbin/rfkill block wifi  , mode "default"
+	bindsym Up   exec --no-startup-id light -A 2%
+	bindsym Down exec --no-startup-id light -U 2%
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
