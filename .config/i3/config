@@ -292,7 +292,7 @@ bar {
 exec --no-startup-id signal-desktop --no-sandbox
 exec --no-startup-id vlc
 exec --no-startup-id projectM-pulseaudio
-exec thunderbird
+# exec thunderbird
 exec kitty --name="__scratch__" bash -c "rax2 -l"
 exec kitty --name="__irssi__"   bash -c "tmux new-session -A -s com 'irssi'"
 exec kitty --name="__code__"    bash -c "tmux new-session -A -s code"
