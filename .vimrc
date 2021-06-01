@@ -19,49 +19,48 @@ set fileencoding=utf-8
 set fileformat=unix
 set foldmethod=syntax
 
+highlight LanguageClientWarning ctermbg=DarkMagenta
+highlight LanguageClientError   ctermbg=DarkRed
+highlight ALEWarning ctermbg=DarkMagenta
+highlight ALEError   ctermbg=DarkRed
 
 
 " let g:hardtime_default_on = 1
 let g:rust_recommended_style=0
 let g:vista#renderer#enable_icon = 1
-let g:airline_theme = 'powerlineish'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:ale_completion_enabled = 1
-let g:ale_rust_analyzer_executable = '/home/ecarroll/.local/bin/rust-analyzer'
-let g:ale_rust_rustfmt_executable  = '/home/ecarroll/.cargo/bin/rustfmt'
-let g:ale_fix_on_save = 1
-set omnifunc=ale#completion#OmniFunc
-
-let g:ale_rust_rustfmt_options = '--edition 2018 --config hard_tabs=true,control_brace_style=ClosingNextLine'
+" let g:airline_theme = 'powerlineish'
+" let g:airline_powerline_fonts = 1
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
+" let g:ale_completion_enabled = 1
+" let g:ale_rust_analyzer_executable = '/home/ecarroll/.local/bin/rust-analyzer'
+" let g:ale_rust_rustfmt_executable  = '/home/ecarroll/.cargo/bin/rustfmt'
+" let g:ale_fix_on_save = 1
+" set omnifunc=ale#completion#OmniFunc
 " let g:ale_set_highlights = 0
-highlight ALEWarning ctermbg=LightRed
-highlight ALEError   ctermbg=DarkRed
-
-
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
-\   'rust': ['rustfmt']
-\}
-
-let g:ale_rust_analyzer_config = {
-\  'rust': {
-\    'all_targets': 1,
-\    'build_on_save': 1,
-\  }
-\}
-
-let g:ale_linters = {
-\  'perl': ['perl','perlcritic'],
-\  'rust': ['analyzer']
-\}
+" let g:ale_fixers = {
+" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+" \   'javascript': ['eslint'],
+" \   'rust': ['rustfmt']
+" \}
+" 
+" let g:ale_rust_analyzer_config = {
+" \  'rust': {
+" \    'all_targets': 1,
+" \    'build_on_save': 1,
+" \  }
+" \}
+" 
+" let g:ale_linters = {
+" \  'perl': ['perl','perlcritic'],
+" \  'rust': ['analyzer']
+" \}
 
 " let g:ale_perl_perl_options = '-c -Mwarnings -Ilib -It/lib'
-let g:airline#extensions#ale#enabled = 1
+" let g:airline#extensions#ale#enabled = 1
 
+"  \ 'rust': ['rustup', 'run', 'stable', 'rust-analyzer'],
 let g:LanguageClient_serverCommands = {
   \ 'rust': ['rust-analyzer'],
 	\ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
@@ -72,8 +71,8 @@ let g:LanguageClient_serverCommands = {
 
 
 call plug#begin('~/.vim/plugged')
-	Plug 'vim-airline/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
+	" Plug 'vim-airline/vim-airline'
+	" Plug 'vim-airline/vim-airline-themes'
 	Plug 'liuchengxu/vista.vim'
 	Plug 'vim-scripts/vis'
 	Plug 'edkolev/promptline.vim'
@@ -85,11 +84,11 @@ call plug#begin('~/.vim/plugged')
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	Plug 'junegunn/fzf.vim'
 	Plug 'scrooloose/nerdtree'
-	Plug 'dense-analysis/ale'
-	" Plug 'autozimu/LanguageClient-neovim', {
-	" 	\ 'branch': 'next',
-	" 	\ 'do': 'bash install.sh',
-	" 	\ }
+	"Plug 'dense-analysis/ale'
+	Plug 'autozimu/LanguageClient-neovim', {
+		\ 'branch': 'next',
+		\ 'do': 'bash install.sh',
+		\ }
 call plug#end()
 
 " note that if you are using Plug mapping you should not use `noremap` mappings.
@@ -111,3 +110,7 @@ nnoremap <C-s> :w<cr>
 autocmd BufNewFile,BufRead *.t   set filetype=perl
 autocmd BufNewFile,BufRead *.asm set filetype=nasm
 autocmd FileType typescript setlocal suffixesadd+=.ts,.mjs expandtab
+autocmd FileType rust       autocmd  BufWritePre <buffer> call LanguageClient#textDocument_formatting_sync()
+" autocmd BufWritePre rust call LanguageClient#textDocument_formatting_sync()
+
+" autocmd BufNewFile,BufRead *.rs  set filetype=rust
