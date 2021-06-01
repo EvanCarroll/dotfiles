@@ -8,8 +8,6 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 if [[ "$TERM" = "xterm-kitty" || -n "$KITTY_WINDOW_ID" ]]; then
 	alias ssh="kitty +kitten ssh"
 fi
@@ -37,3 +35,5 @@ ssh-add -l > /dev/null || ssh-add
 # if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
 #   exec startx
 # fi
+
+eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
