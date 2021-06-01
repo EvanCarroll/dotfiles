@@ -6,10 +6,27 @@ servers = (
     use_ssl = "yes";
     ssl_verify = "yes";
     autoconnect = "yes";
+  },
+  {
+    address = "irc.libera.chat";
+    chatnet = "Libera";
+    port = "6697";
+    use_ssl = "yes";
+    ssl_verify = "yes";
+    autoconnect = "yes";
   }
 );
 
 chatnets = {
+  Libera = { 
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "4";
+    max_whois = "1";
+    sasl_mechanism = "PLAIN";
+    sasl_username = "EvanCarroll";
+    sasl_password = "PASSWORD";
+  };
   Freenode = {
     type = "IRC";
     max_kicks = "1";
@@ -17,21 +34,24 @@ chatnets = {
     max_whois = "1";
     sasl_mechanism = "PLAIN";
     sasl_username = "EvanCarroll";
-    sasl_password = "REDACTED";
+    sasl_password = "PASSWORD";
   };
 };
-
 channels = (
-  { name = "#Houston"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "##Houston"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#HoustonHackers"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#HLUG"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#PostgreSQL"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#PostgreSQL-Lounge"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#PostGIS"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "##Marxism"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "##Socialism"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#cPanel"; chatnet = "Freenode"; autojoin = "Yes"; }
+  { name = "#Houston"; chatnet = "Libera"; autojoin = "Yes"; },
+  { name = "##Houston"; chatnet = "Libera"; autojoin = "Yes"; },
+  { name = "#HoustonHackers"; chatnet = "Libera"; autojoin = "Yes"; },
+  { name = "#HLUG"; chatnet = "Libera"; autojoin = "Yes"; },
+  { name = "#PostgreSQL"; chatnet = "Libera"; autojoin = "Yes"; },
+  {
+    name = "#PostgreSQL-Lounge";
+    chatnet = "Libera";
+    autojoin = "Yes";
+  },
+  { name = "#PostGIS"; chatnet = "Libera"; autojoin = "Yes"; },
+  { name = "##Marxism"; chatnet = "Libera"; autojoin = "Yes"; },
+  { name = "##Socialism"; chatnet = "Libera"; autojoin = "Yes"; },
+  { name = "#cPanel"; chatnet = "Libera"; autojoin = "Yes"; }
 );
 
 aliases = {
@@ -260,25 +280,25 @@ windows = {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "##Houston";
-        tag = "Freenode";
+        tag = "Libera";
       },
       {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#Houston";
-        tag = "Freenode";
+        tag = "Libera";
       },
       {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#HLUG";
-        tag = "Freenode";
+        tag = "Libera";
       },
       {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#HoustonHackers";
-        tag = "Freenode";
+        tag = "Libera";
       }
     );
   };
@@ -288,13 +308,13 @@ windows = {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "##Socialism";
-        tag = "Freenode";
+        tag = "Libera";
       },
       {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "##Marxism";
-        tag = "Freenode";
+        tag = "Libera";
       }
     );
   };
@@ -304,31 +324,31 @@ windows = {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#PostgreSQL";
-        tag = "Freenode";
+        tag = "Libera";
       },
       {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#PostgreSQL-Lounge";
-        tag = "Freenode";
+        tag = "Libera";
       },
       {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#PostGIS";
-        tag = "Freenode";
+        tag = "Libera";
       }
     );
   };
-	5 = {
-		items = (
+  5 = {
+    items = (
       {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#cPanel";
-        tag = "Freenode";
+        tag = "Libera";
       }
-		);
-	};
+    );
+  };
 };
 mainwindows = { 2 = { first_line = "1"; lines = "40"; }; };
