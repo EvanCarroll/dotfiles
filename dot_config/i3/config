@@ -1,0 +1,306 @@
+# i3 config file (v4)
+
+set $mod Mod4
+floating_modifier $mod
+
+font pango:"Fira Code" 12
+focus_follows_mouse no
+default_border pixel 3
+hide_edge_borders none
+
+set $term    kitty
+set $browser chromium --new-window
+set $menu    i3-dmenu-desktop
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec --no-startup-id $menu
+
+set $left    h
+set $down    j
+set $up      k
+set $right   l
+set $ws1   "1:code"
+set $ws2   "2"
+set $ws3   "3"
+set $ws4   "4"
+set $ws5   "5"
+set $ws6   "6"
+set $ws7   "7:gmail"
+set $ws8   "8:obs"
+set $ws9   "9:youtube"
+set $ws10  "10:com"
+set $uri_slack_webpros "https://webpros.slack.com/"
+set $uri_discord       "https://discordapp.com/channels/@me"
+set $uri_sechat        "https://chat.stackexchange.com/rooms/179/the-heap--consultancy-"
+set $uri_voice         "https://voice.google.com"
+set $uri_linkedin      "https://www.linkedin.com"
+set $uri_fb            "https://www.messenger.com"
+set $uri_work_whm      "https://cp-ec1:2087/"
+set $uri_work_cp       "https://cp-ec1:2083/"
+set $uri_mail          "https://mail.google.evancarroll.com"
+set $uri_reddit        "https://reddit.com"
+set $uri_yt            "https://youtube.com"
+set $uri_search        "https://duckduckgo.com"
+# timeout 15 /usr/bin/bluetoothctl scan on; /usr/bin/bluetoothctl scan off; bluetoothctl devices | grep -F 'DCR010' | cut -f 2 -d ' ')"
+set $bt_dewalt  "$(bluetoothctl devices | perl -anE 'print $F[1] if qq[@F[2...$#F]] eq q[DCR010]')"
+set $bt_mouse   "$(bluetoothctl devices | perl -anE 'print $F[1] if qq[@F[2...$#F]] eq q[MX Ergo]')"
+set $bt_lenovo  "$(bluetoothctl devices | perl -anE 'print $F[1] if qq[@F[2...$#F]] eq q[Lenovo 700 BT Speaker]')"
+set $bt_q5k     "$(bluetoothctl devices | perl -anE 'print $F[1] if qq[@F[2...$#F]] eq q[Qudelix-5K]')"
+set $bt_cowin   "$(bluetoothctl devices | perl -anE 'print $F[1] if qq[@F[2...$#F]] eq q[COWIN E9]')"
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+bindsym $mod+$left        focus left
+bindsym $mod+$down        focus down
+bindsym $mod+$up          focus up
+bindsym $mod+$right       focus right
+bindsym $mod+Shift+$left  move left
+bindsym $mod+Shift+$down  move down
+bindsym $mod+Shift+$up    move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+1      move container to workspace $ws1
+bindsym $mod+Shift+2      move container to workspace $ws2
+bindsym $mod+Shift+3      move container to workspace $ws3
+bindsym $mod+Shift+4      move container to workspace $ws4
+bindsym $mod+Shift+5      move container to workspace $ws5
+bindsym $mod+Shift+6      move container to workspace $ws6
+bindsym $mod+Shift+7      move container to workspace $ws7
+bindsym $mod+Shift+8      move container to workspace $ws8
+bindsym $mod+Shift+9      move container to workspace $ws9
+bindsym $mod+Shift+0      move container to workspace $ws10
+bindsym $mod+bracketright move workspace to output right
+bindsym $mod+bracketleft  move workspace to output left
+bindsym XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ off; exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute         exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute      exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86AudioPlay         exec --no-startup-id playerctl play-pause
+# XF86AudioPause bound to FN+p by bios on thinkpad
+bindsym Pause                 exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext         exec --no-startup-id playerctl next
+bindsym XF86AudioPrev         exec --no-startup-id playerctl previous
+bindsym $mod+Up               exec --no-startup-id playerctl play-pause
+bindsym $mod+Right            exec --no-startup-id playerctl next
+bindsym $mod+Left             exec --no-startup-id playerctl previous
+bindsym $mod+Down             exec --no-startup-id playerctl stop
+bindsym XF86MonBrightnessUp   exec --no-startup-id light -A "5%"
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U "5%"
+bindsym $mod+Print   exec xfce4-screenshooter
+bindsym $mod+f       fullscreen
+bindsym $mod+Shift+v splith
+bindsym $mod+v       splitv
+bindsym $mod+Shift+s layout stacking
+bindsym $mod+w       layout tabbed
+bindsym $mod+e       layout toggle split
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus       scratchpad show
+bindsym $mod+space       focus mode_toggle
+bindsym $mod+Tab         workspace back_and_forth
+# focus the parent container
+#bindsym $mod+a focus parent
+#bindsym $mod+d focus child
+
+
+bindsym Control+mod1+Delete exec xdg-screensaver activate
+
+assign [class="^kitty$" instance="^__code__"]                          → $ws1
+
+## title = page, instance = app
+##for_window [window_role="^browser$" title="me@evancarroll.com - Evancarroll.com Mail"] move to workspace $ws7
+assign [window_role="^browser$" title="me@evancarroll.com - Evancarroll.com Mail"] → $ws7
+assign [window_role="^browser$" instance="^reddit.com"]            → $ws7
+assign [window_role="^browser$" title="reddit"]                    → $ws7
+
+assign [class="^vlc$"]                                             → $ws9
+assign [class="^ProjectM"]                                         → $ws9
+assign [window_role="^browser$" title="YouTube"]                   → $ws9
+assign [window_role="^browser$" title="Google Play Music"]         → $ws9
+## assign [window_role="^browser$" title="chat.stackexchange.com"]    → $ws10
+## assign [window_role="^browser$" title="Voice - "]                  → $ws10
+## assign [window_role="^browser$" title="Slack"]                     → $ws10
+## assign [window_role="^browser$" title="Discord"]                   → $ws10
+assign [instance="^Signal$"]                                       → $ws10
+assign [instance="^Mail$"]                                         → $ws10
+
+exec i3-msg 'workspace $ws10; layout stacked; workspace back_and_forth'
+
+for_window [class="^kitty$" instance="^__scratch__"] move scratchpad, border pixel 4
+for_window [class="Signal"] border pixel 0
+for_window [class="vlc"] border none
+for_window [class="ProjectM"] border none
+for_window [class="^Chromium-browser$" title="^youtube.com"] move to workspace $ws9, border none
+for_window [class="^Chromium-browser$" title="chat.stackexchange.com" workspace=10] border none
+for_window [class="^kitty$" instance="^__irssi__"] move to workspace $ws10
+for_window [class="^kitty$" instance="^__news__"] move to workspace $ws10
+
+#bindsym $mod+Down [title="^DevTools -"] move scratchpad
+#bindsym $mod+Up [title="^DevTools -"] scratchpad show
+#bindsym $mod+Right focus right
+
+bindsym $mod+Shift+R exec i3-input -F 'rename workspace to "%s"' -P 'Rename workspace: '
+
+mode "kill" {
+	bindsym v exec killall -s 9 vlc, mode "default"
+	bindsym d exec killall -s 9 Discord, mode "default"
+	bindsym s exec killall -s 9 slack, mode "default"
+	bindsym r exec killall -s 9 ranger, mode "default"
+	bindsym z exec killall -s 9 zoom, mode "default"
+	bindsym o exec killall -s 9 obs, mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "focus" {
+	bindsym y [title="YouTube"] focus, mode "default"
+	bindsym v [title="Voice - "] focus, mode "default"
+	bindsym s [title="Slack"] focus, mode "default"
+	bindsym d [title="Discord"] focus, mode "default"
+	bindsym z [title="^Zoom (?:Meeting|Webinar)"] focus, mode "default"
+	bindsym m [title="Mail - Evan Carroll"] focus, mode "default"
+	bindsym Shift+S [title="Signal"] focus, mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "apps" {
+	bindsym p exec --no-startup-id projectM-pulseaudio, mode "default"
+	bindsym v exec --no-startup-id vlc, mode "default"
+	bindsym m exec --no-startup-id vlc, exec --no-startup-id projectM-pulseaudio; mode "default"
+	bindsym x mode "kill"
+	bindsym f mode "focus"
+	bindsym k mode "kill"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+a mode "apps"
+
+
+mode "resize" {
+	bindsym h resize shrink width 10 px or 10 ppt
+	bindsym j resize grow height 10 px or 10 ppt
+	bindsym k resize shrink height 10 px or 10 ppt
+	bindsym l resize grow width 10 px or 10 ppt
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	bindsym $mod+r mode "default"
+}
+bindsym $mod+r mode "resize"
+
+mode "browser" {
+	bindsym b exec $browser, mode "default"
+	bindsym a exec $browser $uri_search, mode "default"
+	bindsym s exec $browser --incognito, mode "default"
+	bindsym m exec $browser $uri_mail, mode "default"
+	bindsym r exec $browser $uri_reddit, mode "default"
+	bindsym c exec $browser $uri_slack_webpros $uri_discord $uri_sechat $uri_voice $uri_fb $uri_linkedin, mode "default"
+	bindsym y exec $browser $uri_yt, mode "default"
+	bindsym w exec chromium --user-data-dir=/home/ecarroll/.config/chromium_work, mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+b mode "browser"
+
+mode "console" {
+	bindsym s exec $term --name"=__scratch__" rax2 -l, mode "default"
+	bindsym i exec $term --name="__irssi__"   bash -c "tmux new-session -A -s com 'irssi'", mode "default"
+	bindsym c exec $term --name="__code__"    bash -c "tmux new-session -A -s code", mode "default"
+	bindsym n exec $term --name="__news__"    bash -c "tmux new-session -A -s news", mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+c mode "console"
+
+# Maybe some day, I won't *have* to use i3
+mode "window_manager" {
+	## Disruptives use capitals
+	bindsym Shift+r restart , mode "default"
+	bindsym Shift+e exit
+
+	bindsym r reload, mode "default"
+
+	#bindsym l exec --no-startup-id i3lock -i /home/ecarroll/Pictures/ohm.png, mode "default"
+	bindsym l exec --no-startup-id xscreensaver-command -lock, mode "default"
+	#bindsym s exec --no-startup-id systemctl suspend -f -i, mode "default"
+	bindsym s exec --no-startup-id xscreensaver-command -lock, exec --no-startup-id systemctl suspend -i, mode "default"
+	bindsym e exec "gvim ~/.config/i3/config", mode "default"
+
+	# just point to the external monitor, will work only if one is installed
+	# down turns off, up turns on
+	bindsym Up    exec xrandr --auto
+	bindsym Left  exec xrandr --output "$(xrandr | sed -ne'/eDP-1/d' -e's/ connected.*//p')" --left-of  eDP-1, mode "default"
+	bindsym Right exec xrandr --output "$(xrandr | sed -ne'/eDP-1/d' -e's/ connected.*//p')" --right-of eDP-1, mode "default"
+	bindsym Down  exec xrandr --output "$(xrandr | sed -ne'/eDP-1/d' -e's/ connected.*//p')" --off, mode "default"
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+BackSpace mode "window_manager"
+
+mode "power" {
+	bindsym s exec --no-startup-id systemctl suspend, mode "default"
+	bindsym p exec --no-startup-id sudo cpupower frequency-set -g performance && dunstify "POWER: Performance", mode "default"
+	bindsym e exec --no-startup-id sudo cpupower frequency-set -g powersave && dunstify "POWER: Economy Mode", mode "default"
+	bindsym b exec       --no-startup-id bluetoothctl power on , mode "default"
+	bindsym Shift+B exec --no-startup-id bluetoothctl power off, mode "default"
+	bindsym w exec       --no-startup-id /sbin/rfkill unblock wifi, mode "default"
+	bindsym Shift+W exec --no-startup-id /sbin/rfkill block wifi  , mode "default"
+
+	bindsym Up   exec --no-startup-id light -A 2%
+	bindsym Down exec --no-startup-id light -U 2%
+	bindsym Shift+Up   exec --no-startup-id light -S 100
+	bindsym Shift+Down exec --no-startup-id light -S 0.01
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "bluetooth" {
+	# cowin
+	bindsym c       exec --no-startup-id bluetoothctl connect    $bt_cowin,  mode "default"
+	bindsym Shift+C exec --no-startup-id bluetoothctl disconnect $bt_cowin,  mode "default"
+	bindsym q       exec --no-startup-id bluetoothctl connect    $bt_q5k,    mode "default"
+	bindsym Shift+Q exec --no-startup-id bluetoothctl disconnect $bt_q5k,    mode "default"
+	bindsym l       exec --no-startup-id bluetoothctl connect    $bt_lenovo, mode "default"
+	bindsym Shift+L exec --no-startup-id bluetoothctl disconnect $bt_lenovo, mode "default"
+	bindsym m       exec --no-startup-id bluetoothctl connect    $bt_mouse, mode "default"
+	bindsym Shift+M exec --no-startup-id bluetoothctl disconnect $bt_mouse, mode "default"
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "system" {
+	bindsym b mode "bluetooth"
+	bindsym p mode "power"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+s mode "system"
+
+
+bar {
+	status_command i3blocks
+	strip_workspace_numbers yes
+}
+
+## exec $browser --new-window $uri_yt
+## exec $browser --new-window $uri_mail
+## exec $browser --new-window $uri_reddit
+## exec $browser --new-window $uri_cp_slack $uri_discord $uri_sechat $uri_voice
+
+# Why fuck signal https://github.com/signalapp/Signal-Desktop/issues/4291
+exec --no-startup-id signal-desktop --no-sandbox
+exec --no-startup-id vlc
+exec --no-startup-id projectM-pulseaudio
+# exec thunderbird
+exec kitty --name="__scratch__" bash -c "rax2 -l"
+exec kitty --name="__irssi__"   bash -c "tmux new-session -A -s com 'irssi'"
+exec kitty --name="__code__"    bash -c "tmux new-session -A -s code"
+exec kitty --name="__news__"    bash -c "tmux new-session -A -s news 'newsboat'"

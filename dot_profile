@@ -1,0 +1,68 @@
+alias exa="exa --icons --time-style=long-iso"
+alias mssql-cli="mssql-cli -U sa -P ${MSSQL_SA_PASSWORD}"
+alias sqlcmd="sqlcmd -H localhost -U sa -P ${MSSQL_SA_PASSWORD} -I"
+alias mssql="grep MSSQL ~/.bashrc"
+alias rsync="rsync -avr --progress --inplace"
+alias seedup="rsync --ignore-existing *.torrent rg-seedbox:torrents/"
+alias vlcmusic="vlc --sout=\"#duplicate{dst=display{delay=2800},dst=chromecast{ip=10.0.0.135,audio=1}}\""
+alias g="gcc -std=gnu11 -Wall -Wextra -Wpedantic -Wstrict-overflow -fno-strict-aliasing"
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias ls='exa'
+alias la='exa -lga'
+alias l='exa -lg'
+alias tmux='TERM=xterm-256color tmux -2'
+
+if [[ "$TERM" = "xterm-kitty" || -n "$KITTY_WINDOW_ID" ]]; then
+	alias ssh="kitty +kitten ssh"
+fi
+
+if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+	eval `ssh-agent`
+	ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+	ssh-add ~/.ssh/id_ed5519
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+ssh-add -l > /dev/null || ssh-add
+
+# Apple is GARBAGE
+# https://apple.stackexchange.com/q/455562/76955
+if [ $(uname -m)=="aarch64" ]; then
+	export LIBGL_ALWAYS_SOFTWARE=true;
+fi
+
+export EDITOR=vim
+export KUBECONFIG=~/.kube/config
+export MANPATH=$HOME/perl5/man:$MANPATH
+export N_PREFIX="$HOME/n";
+export WASMER_DIR="$HOME/.wasmer"
+export WASMER_CACHE_DIR="$WASMER_DIR/cache"
+export WASMER_BIN_DIR="$WASMER_DIR/bin"
+
+# add to path if doesn't exist
+# https://unix.stackexchange.com/a/62599/3285
+
+if $(perl -Mlocal::lib 2>/dev/null); then
+	eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+fi;
+
+typeset -U path PATH
+path[1,0]=$HOME/.wasmtime/bin
+path[1,0]=$WASMER_BIN_DIR
+path[1,0]=$HOME/.local/bin
+path[1,0]=$HOME/bin
+path[1,0]=$HOME/.cargo/bin
+path[1,0]=$HOME/go/bin
+path[1,0]=$HOME/perl5/bin
+path[1,0]=$HOME/n/bin
+
+
+# if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
+#   exec startx
+# fi
+
+# if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+#   exec startx
+# fi
+. "$HOME/.cargo/env"
