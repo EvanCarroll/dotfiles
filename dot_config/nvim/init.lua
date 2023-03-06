@@ -1,4 +1,4 @@
-﻿vim.opt.background = 'dark'
+vim.opt.background = 'dark'
 -- vim.g["&t_ut"] = ''           -- https://sw.kovidgoyal.net/kitty/faq.html
 -- Wrap :retab!
 -- %s/\s\+$//
