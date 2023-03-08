@@ -43,7 +43,7 @@ export WASMER_BIN_DIR="$WASMER_DIR/bin"
 # add to path if doesn't exist
 # https://unix.stackexchange.com/a/62599/3285
 
-if $(perl -Mlocal::lib 2>/dev/null); then
+if perl -Mlocal::lib 2>/dev/null; then
 	eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
 fi;
 
