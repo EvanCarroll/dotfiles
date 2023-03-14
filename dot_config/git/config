@@ -1,0 +1,12 @@
+[user]
+	name = Evan Carroll
+	email = me@evancarroll.com
+
+[feature]
+	manyFiles = true
+
+[core]
+	editor = vim
+
+[init]
+	defaultBranch = main
