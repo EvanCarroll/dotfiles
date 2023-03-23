@@ -26,12 +26,12 @@ set $ws4   "4"
 set $ws5   "5"
 set $ws6   "6"
 set $ws7   "7:gmail"
-set $ws8   "8:youtube"
+set $ws8   "8:media"
 set $ws9   "9:work"
 set $ws10  "10:com"
-set $ws_media  $ws8
-set $ws_work   $ws9
-set $ws_comm   $ws10
+set $ws_media  "8:media"
+set $ws_work   "9:work"
+set $ws_comm   "10:com"
 set $uri_slack_webpros "https://webpros.slack.com/"
 set $uri_discord       "https://discordapp.com/channels/@me"
 set $uri_sechat        "https://chat.stackexchange.com/rooms/179/the-heap--consultancy-"
@@ -116,8 +116,7 @@ bindsym Control+mod1+Delete exec xdg-screensaver activate
 
 assign [class="^kitty$" instance="^__code__"]                          → $ws1
 
-## title = page, instance = app
-##for_window [window_role="^browser$" title="me@evancarroll.com - Evancarroll.com Mail"] move to workspace $ws7
+
 assign [window_role="^browser$" title="me@evancarroll.com - Evancarroll.com Mail"] → $ws7
 assign [window_role="^browser$" instance="^reddit.com"]            → $ws7
 assign [window_role="^browser$" title="reddit"]                    → $ws7
@@ -127,9 +126,11 @@ assign [class="^ProjectM"]                                         → $ws_media
 assign [window_role="^browser$" title="YouTube"]                   → $ws_media
 assign [window_role="^browser$" title="Google Play Music"]         → $ws_media
 
+assign [window_role="^browser$" title="Slack"]                     → $ws_work
+assign [window_role="^browser$" title=" - Outlook"]                → $ws_work
+
 assign [window_role="^browser$" title="chat.stackexchange.com"]    → $ws_comm
 assign [window_role="^browser$" title="Voice - "]                  → $ws_comm
-assign [window_role="^browser$" title="Slack"]                     → $ws_comm
 assign [window_role="^browser$" title="Discord"]                   → $ws_comm
 assign [instance="^Signal$"]                                       → $ws_comm
 assign [instance="^Mail$"]                                         → $ws_comm
@@ -140,8 +141,6 @@ for_window [class="^kitty$" instance="^__scratch__"] move scratchpad, border pix
 for_window [class="Signal"] border pixel 0
 for_window [class="vlc"] border none
 for_window [class="ProjectM"] border none
-for_window [class="^Chromium-browser$" title="^youtube.com"] move to workspace $ws9, border none
-for_window [class="^Chromium-browser$" title="chat.stackexchange.com" workspace=10] border none
 for_window [class="^kitty$" instance="^__irssi__"] move to workspace $ws10
 for_window [class="^kitty$" instance="^__news__"] move to workspace $ws10
 
