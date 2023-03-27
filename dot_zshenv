@@ -1,3 +1,13 @@
+# Microsoft...
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export MSSQL_CLI_TELEMETRY_OPTOUT=1
+export DOTNET_UPGRADEASSISTANT_TELEMETRY_OPTOUT=1
+export POWERSHELL_TELEMETRY_OPTOUT=1
+## Because you need a long password with nums, lc, and ucs
+export MSSQL_SA_PASSWORD="MICROSOFTsucksH4RD"
+
+export LESS="RSs"
+export PAGER="less"
 export EDITOR=vim
 export KUBECONFIG=~/.kube/config
 export MANPATH=$HOME/perl5/man:$MANPATH
