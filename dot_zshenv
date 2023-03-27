@@ -1,13 +1,3 @@
-typeset -U path PATH
-path[1,0]=$HOME/.local/bin
-path[1,0]=$HOME/.wasmtime/bin
-path[1,0]=$HOME/bin
-path[1,0]=$WASMER_BIN_DIR
-path[1,0]=$HOME/.cargo/bin
-path[1,0]=$HOME/go/bin
-path[1,0]=$HOME/perl5/bin
-path[1,0]=$HOME/n/bin
-
 export EDITOR=vim
 export KUBECONFIG=~/.kube/config
 export MANPATH=$HOME/perl5/man:$MANPATH
@@ -15,3 +5,13 @@ export N_PREFIX="$HOME/n";
 export WASMER_DIR="$HOME/.wasmer"
 export WASMER_CACHE_DIR="$WASMER_DIR/cache"
 export WASMER_BIN_DIR="$WASMER_DIR/bin"
+
+typeset -U path PATH
+path[1,0]=$HOME/.local/bin
+path[1,0]=$HOME/bin
+path[1,0]=$HOME/.wasmtime/bin
+path[1,0]=$HOME/.cargo/bin
+path[1,0]=$HOME/go/bin
+path[1,0]=$HOME/perl5/bin
+path[1,0]=$HOME/n/bin
+path[1,0]=$WASMER_BIN_DIR
