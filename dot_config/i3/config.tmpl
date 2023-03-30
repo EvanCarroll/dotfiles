@@ -287,10 +287,15 @@ mode "system" {
 }
 bindsym $mod+s mode "system"
 
-
 bar {
 	status_command i3blocks
 	strip_workspace_numbers yes
+
+	{{ if ne .chezmoi.hostname "x1c7" }}
+	colors {
+		background #580000
+	}
+	{{ end }}
 }
 
 ## exec $browser --new-window $uri_yt
