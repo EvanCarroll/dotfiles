@@ -17,11 +17,13 @@ export WASMER_CACHE_DIR="$WASMER_DIR/cache"
 export WASMER_BIN_DIR="$WASMER_DIR/bin"
 
 typeset -U path PATH
+
+# always add the paths that make sense
 path[1,0]=$HOME/.local/bin
 path[1,0]=$HOME/bin
-path[1,0]=$HOME/.wasmtime/bin
-path[1,0]=$HOME/.cargo/bin
-path[1,0]=$HOME/go/bin
-path[1,0]=$HOME/perl5/bin
-path[1,0]=$HOME/n/bin
-path[1,0]=$WASMER_BIN_DIR
+
+for dir in .cargo go n perl5 .wasmer .wasmtime google-cloud-sdk; do
+	if [ -d "$HOME/$dir/bin" ]; then
+		path[1,0]="$HOME/$dir/bin"
+	fi
+done;
