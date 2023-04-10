@@ -1,3 +1,20 @@
 #!/bin/sh
+##
+## Script inspired by Linux x1c variant
+## Neccessary because UTM only provides 5120x2160
+## We want 5120x1440
+##
 
-xrandr --output Virtual-1 --mode 5120x1440
+DEV="Virtual-1"
+
+MODE_NAME_MON="5120x1440_60_MONITOR"
+MODE_MONITOR="469.000  5120 5168 5200 5280 1440 1443 1453 1481 +HSync -Vsync"
+
+xrandr --newmode "$MODE_NAME_MON" $MODE_MONITOR
+xrandr --addmode "$DEV"           "$MODE_NAME_MON"
+xrandr --output "$DEV" --mode "$MODE_NAME_MON"
+
+## When plugged into monitor directly
+## 5120x1440 (0x95f) 469.000MHz +HSync -VSync +preferred
+##       h: width  5120 start 5168 end 5200 total 5280 skew    0 clock  88.83KHz
+##       v: height 1440 start 1443 end 1453 total 1481           clock  59.98Hz
