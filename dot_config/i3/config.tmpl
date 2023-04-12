@@ -286,6 +286,10 @@ mode "system" {
 	bindsym Escape mode "default"
 }
 bindsym $mod+s mode "system"
+	
+{{ if ne .chezmoi.hostname "x1c7" }}
+client.background #579999
+{{ end }}
 
 bar {
 	status_command i3blocks
