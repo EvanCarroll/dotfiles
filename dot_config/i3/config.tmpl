@@ -206,10 +206,20 @@ mode "browser" {
 	bindsym c exec $browser $uri_slack_webpros $uri_discord $uri_sechat $uri_voice $uri_fb $uri_linkedin, mode "default"
 	bindsym y exec $browser $uri_yt, mode "default"
 	bindsym w exec chromium --user-data-dir=/home/ecarroll/.config/chromium_work, mode "default"
+	bindsym o mode "browser-open"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
 bindsym $mod+b mode "browser"
+
+
+mode "browser-open" {
+	bindsym m exec $browser $uri_mail, mode "default"
+	bindsym r exec $browser $uri_reddit, mode "default"
+	bindsym s exec $browser "https://app.slack.com", mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
 
 mode "console" {
 	bindsym s exec $term --name"=__scratch__" rax2 -l, mode "default"
