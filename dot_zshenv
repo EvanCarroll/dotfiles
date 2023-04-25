@@ -18,12 +18,18 @@ export WASMER_BIN_DIR="$WASMER_DIR/bin"
 
 typeset -U path PATH
 
-# always add the paths that make sense
-path[1,0]=$HOME/bin
-path[1,0]=$HOME/.local/bin
+# ulc/go/bin is for go itself
+# `go install` places bins in ~/go/bin
+if [ -d "/usr/local/go/bin" ]; then
+	path[1,0]="/usr/local/go/bin"
+fi
 
 for dir in google-cloud-sdk .wasmtime .wasmer perl5 n go .cargo; do
 	if [ -d "$HOME/$dir/bin" ]; then
 		path[1,0]="$HOME/$dir/bin"
 	fi
 done;
+
+# always add the paths that make sense
+path[1,0]=$HOME/bin
+path[1,0]=$HOME/.local/bin
