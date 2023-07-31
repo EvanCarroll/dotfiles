@@ -18,14 +18,6 @@ if [[ "$TERM" = "xterm-kitty" || -n "$KITTY_WINDOW_ID" ]]; then
 	alias ssh="kitty +kitten ssh"
 fi
 
-if [ ! -S ~/.ssh/ssh_auth_sock ]; then
-	eval `ssh-agent`
-	ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-	ssh-add ~/.ssh/id_ed5519
-fi
-export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
-ssh-add -l > /dev/null || ssh-add
-
 # Apple is GARBAGE
 # https://apple.stackexchange.com/q/455562/76955
 if [ $(uname -m)=="aarch64" ]; then
