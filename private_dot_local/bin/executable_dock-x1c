@@ -22,9 +22,9 @@ MODE_DOCK_TB4="469.000 5120 5168 5200 5280 1440 1443 1453 1481 +HSync -VSync"
 # xrandr --delmode "$TB4" $MODE_NAME_TB4
 # xrandr --rmmode  $MODE_NAME_TB4
 
-xrandr --output "HDMI-1"    --off
-xrandr --output "$TB4"      --off
-xrandr --output "$TB3_LEFT" --off
+xrandr --output "HDMI-1"    --off &> /dev/null 
+xrandr --output "$TB4"      --off &> /dev/null
+xrandr --output "$TB3_LEFT" --off &> /dev/null
 
 
 xrandr --newmode "$MODE_NAME_MON" $MODE_MONITOR
