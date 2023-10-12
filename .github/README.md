@@ -7,7 +7,30 @@ Evan Carroll's Dotfile Repo
 	* `curl`
 	* `neovim`
 	* `ripgrep` (rust usually packaged now)
-	* `exa` (rust usually packaged now)
+	* `lsd` (rust usually packaged now)
+
+```sh
+apt-get install kitty-terminfo zsh git curl neovim ripgrep lsd
+```
+
+If you're running Kitty in a GUI on this install,
+
+```sh
+## Install Kitty
+apt-get install kitty
+
+## Install Nerd fonts
+export root="$(mktemp -d)"
+for font in "FiraCode" "ComicShannsMono" "BigBlueTerminal"; do
+  dir="${root}/$font";
+	mkdir -p "$dir";
+	echo "Downloading and extracting to $dir";
+	curl --silent -L "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${font}.tar.xz" -o "$dir/fonts.tar.xz";
+	tar -C "${dir}" -Jxvvf "$dir/fonts.tar.xz";
+	mkdir -p "$HOME/.local/share/fonts/$font" 2>&1;
+	mv "$dir"/* "$HOME/.local/share/fonts/$font";
+done;
+```
 
 2. After `zsh` is installed, then install,
 	1. Install [ohmyzsh](https://ohmyz.sh/#install)
