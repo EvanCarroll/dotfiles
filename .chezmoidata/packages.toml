@@ -1,0 +1,59 @@
+# Packages required for a working install of these dotfiles.
+# Consumed by the run_onchange_* scripts; editing a list re-runs its script
+# on the next `chezmoi apply`.
+
+[apt]
+# Desktop session: i3, bar, notifications, terminal, locker, keymap
+desktop = [
+  "xinit", "i3-wm", "i3blocks", "polybar", "dunst", "libnotify-bin", "kitty",
+  "xscreensaver", "x11-xkb-utils", "x11-xserver-utils", "inputplug", "fontconfig",
+  "xdg-desktop-portal", "xdg-desktop-portal-gtk",
+]
+# Things bound to keys or started by i3 / polybar / joshuto
+apps = [
+  "light", "playerctl", "pulseaudio-utils", "bluez", "linux-cpupower", "iw",
+  "irssi", "newsboat", "tmux", "vlc", "projectm-pulseaudio",
+  "xfce4-screenshooter", "chromium", "ffmpegthumbnailer",
+]
+shell = ["zsh", "git", "curl", "ca-certificates", "python3"]
+containers = ["podman", "buildah"]
+forges = ["gh", "glab"]
+# Toolchain + build deps for cargo crates and xdg-desktop-portal-termfilechooser
+build = [
+  "build-essential", "pkg-config", "libssl-dev",
+  "meson", "ninja-build", "scdoc", "libinih-dev", "libsystemd-dev",
+  "libpam0g-dev", # lemurs
+]
+# From third-party repos configured by run_onchange_before_10-apt.sh
+thirdparty = ["signal-desktop"]
+
+[rust]
+toolchains = ["stable", "nightly"]
+default = "nightly"
+components = ["rust-src", "rust-analyzer", "clippy", "rustfmt"]
+targets = ["wasm32-unknown-unknown", "x86_64-unknown-linux-musl"]
+
+# Installed with `cargo binstall` (prebuilt when available, else compiled).
+crates = [
+  "ag", "b3sum", "bat", "bottom", "cargo-bloat", "cargo-edit", "cargo-expand",
+  "cargo-fuzz", "cargo-generate", "cargo-insta", "cargo-leptos", "cargo-limit",
+  "cargo-outdated", "cargo-public-api", "cargo-watch", "cross", "csvlens",
+  "ddh", "fclones", "fd-find", "fnm", "git-cliff", "leptosfmt", "lsd",
+  "markdown-reader", "mdbook", "mdcat", "mf2-cli", "oculante", "procs", "qrrs",
+  "rusty-man", "sccache", "skim", "stack-sizes", "taskwarrior-tui", "tokei",
+  "trunk", "twiggy", "wasm-bindgen-cli", "wasm-nm", "wasm-pack", "yazi-cli",
+  "yazi-fm", "zola", "zoxide",
+]
+
+# Installed with `cargo install --git` (not on crates.io).
+[[rust.git]]
+url = "https://github.com/EvanCarroll/i3-spatial-desktop"
+package = "i3-spatial-desktop"
+
+[[rust.git]]
+url = "https://github.com/EvanCarroll/claudeai-bundle"
+package = "claudeai-bundle"
+
+[[rust.git]]
+url = "https://github.com/Toqozz/wired-notify"
+package = "wired"

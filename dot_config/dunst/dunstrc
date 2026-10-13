@@ -1,0 +1,10 @@
+[global]
+    # Set this to the exact name of your installed icon theme folder in /usr/share/icons/
+    icon_theme = "Adwaita"  # or "Papirus", "Breeze", etc.
+
+[i3-mode]
+appname = "i3-mode"
+format = "<b>%b</b>"
+background = "#7f0000"
+foreground = "#ffffff"
+frame_color = "#ff3333"

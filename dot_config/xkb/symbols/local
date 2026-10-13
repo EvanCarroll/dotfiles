@@ -1,0 +1,13 @@
+// Caps Lock acts as a real Super/Windows modifier.
+//
+// Mod4 is bound by KEY (<CAPS>, <LWIN>, <RWIN>) rather than by keysym.
+// pc(pc) uses `modifier_map Mod4 { Super_L, Super_R }`, which is keysym-based;
+// giving <CAPS> the Super_L keysym makes that rule ambiguous and drops <LWIN>.
+// Binding by key sidesteps the ambiguity so all three keys keep the Mod4 bit.
+//
+// Caps Lock no longer locks — it is a modifier only.
+partial modifier_keys
+xkb_symbols "capssuper" {
+    key <CAPS> { [ Super_L ], type[group1] = "ONE_LEVEL" };
+    modifier_map Mod4 { <CAPS>, <LWIN>, <RWIN> };
+};

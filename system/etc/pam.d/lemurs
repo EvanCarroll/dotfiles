@@ -1,0 +1,17 @@
+#%PAM-1.0
+# Lemurs display manager. Mirrors Debian's /etc/pam.d/lightdm (including the
+# gnome-keyring unlock) rather than upstream's "include login", which pulls in
+# tty-only modules such as pam_motd and pam_mail.
+auth      requisite pam_nologin.so
+session   required  pam_env.so readenv=1
+session   required  pam_env.so readenv=1 envfile=/etc/default/locale
+@include common-auth
+-auth     optional  pam_gnome_keyring.so
+@include common-account
+session   [success=ok ignore=ignore module_unknown=ignore default=bad] pam_selinux.so close
+session   required  pam_limits.so
+session   required  pam_loginuid.so
+@include common-session
+session   [success=ok ignore=ignore module_unknown=ignore default=bad] pam_selinux.so open
+-session  optional  pam_gnome_keyring.so auto_start
+@include common-password

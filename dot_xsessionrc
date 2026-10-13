@@ -1,0 +1,24 @@
+# X session setup, sourced by /etc/X11/Xsession (Xsession.d/40x11-common_xsessionrc).
+# Both Lemurs and LightDM start sessions through that wrapper.
+
+# Import environment.d (what systemd user services and the portals see) so i3
+# and everything it launches share the same PATH and variables.
+. "$HOME/.config/shell/environment.sh"
+
+# Lemurs clears these; LightDM set them from i3.desktop.
+export XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-i3}"
+export XDG_SESSION_DESKTOP="${XDG_SESSION_DESKTOP:-i3}"
+export DESKTOP_SESSION="${DESKTOP_SESSION:-i3}"
+
+# Xsession.d/20dbus_xdg-runtime already pushed these before XDG_CURRENT_DESKTOP
+# was set; push again so the portals see the final values.
+dbus-update-activation-environment --systemd DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP
+
+# Caps Lock -> Super (see ~/.config/xkb/symbols/local). Applied now, and again
+# by inputplug for every keyboard X (re-)adds: Xorg resets new devices to its
+# default keymap, which races session startup and undoes it on hotplug/dock.
+"$HOME/.local/bin/xkb-capssuper"
+command -v inputplug >/dev/null && inputplug -0 -c "$HOME/.local/bin/xkb-capssuper"
+
+# Screen locker used by i3's window_manager and power modes
+xscreensaver --no-splash &

@@ -1,0 +1,22 @@
+# Lemurs TUI display manager on tty2.
+# Based on upstream extra/lemurs.service; binary lives in /usr/local/bin and
+# getty@tty2 is explicitly conflicted so the two never fight over the VT.
+# Lives in /usr/local/lib/systemd/system (local software); override with `systemctl edit lemurs`.
+[Unit]
+Description=Lemurs display manager
+Documentation=https://github.com/coastalwhite/lemurs
+After=systemd-user-sessions.service plymouth-quit-wait.service
+After=getty@tty2.service
+Conflicts=getty@tty2.service
+
+[Service]
+ExecStart=/usr/local/bin/lemurs
+StandardInput=tty
+TTYPath=/dev/tty2
+TTYReset=yes
+TTYVHangup=yes
+Type=idle
+Restart=on-failure
+
+[Install]
+Alias=display-manager.service

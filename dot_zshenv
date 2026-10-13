@@ -1,40 +1,7 @@
-# Microsoft...
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export MSSQL_CLI_TELEMETRY_OPTOUT=1
-export DOTNET_UPGRADEASSISTANT_TELEMETRY_OPTOUT=1
-export POWERSHELL_TELEMETRY_OPTOUT=1
+# Read by every zsh: login, interactive, and non-interactive (`zsh -c`,
+# `ssh host cmd`). Environment variables live in ~/.config/environment.d;
+# import them here if this shell didn't inherit them.
+. "$HOME/.config/shell/environment.sh"
 
-## Because you need a long password with nums, lc, and ucs
-export MSSQL_SA_PASSWORD="MICROSOFTsucksH4RD"
-
-export LANG="en_US.UTF-8"
-export LESS="RSs"
-export PAGER="less"
-export EDITOR=vim
-export KUBECONFIG=~/.kube/config
-export MANPATH=$HOME/perl5/man:$MANPATH
-export N_PREFIX="$HOME/n";
-export WASMER_DIR="$HOME/.wasmer"
-export WASMER_CACHE_DIR="$WASMER_DIR/cache"
-export WASMER_BIN_DIR="$WASMER_DIR/bin"
-
+# Drop duplicate PATH entries (nested shells, tools that prepend).
 typeset -U path PATH
-
-# ulc/go/bin is for go itself
-# `go install` places bins in ~/go/bin
-if [ -d "/usr/local/go/bin" ]; then
-	path[1,0]="/usr/local/go/bin"
-fi
-
-for dir in google-cloud-sdk .wasmtime .wasmer perl5 n go .cargo; do
-	if [ -d "$HOME/$dir/bin" ]; then
-		path[1,0]="$HOME/$dir/bin"
-	fi
-done;
-
-# always add the paths that make sense
-
-# This is no longer required as only chezmoi used it
-# path[1,0]=$HOME/bin
-
-path[1,0]=$HOME/.local/bin

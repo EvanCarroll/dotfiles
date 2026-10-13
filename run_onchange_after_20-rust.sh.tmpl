@@ -1,0 +1,31 @@
+#!/bin/bash
+# Rust toolchains and cargo-installed binaries from .chezmoidata/packages.toml.
+# Re-runs whenever that list changes. Always installs the latest release.
+set -euo pipefail
+
+if ! command -v rustup >/dev/null 2>&1 && [ ! -x "$HOME/.cargo/bin/rustup" ]; then
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+fi
+. "$HOME/.cargo/env"
+
+{{ range .rust.toolchains -}}
+rustup toolchain install {{ . }} --profile minimal \
+	--component {{ $.rust.components | join "," }} \
+	--target {{ $.rust.targets | join "," }}
+{{ end -}}
+rustup default >/dev/null 2>&1 || rustup default {{ .rust.default }}
+
+if ! command -v cargo-binstall >/dev/null 2>&1; then
+	curl -L --proto '=https' --tlsv1.2 -sSf \
+		https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+fi
+cargo binstall --no-confirm cargo-binstall
+
+cargo binstall --no-confirm --continue-on-failure \
+{{- range .rust.crates }}
+	{{ . }} \
+{{- end }}
+
+{{ range .rust.git -}}
+cargo install --locked --git {{ .url }} {{ .package }} || cargo install --git {{ .url }} {{ .package }}
+{{ end -}}

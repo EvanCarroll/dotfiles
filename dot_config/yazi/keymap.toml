@@ -1,0 +1,5 @@
+[mgr]
+prepend_keymap = [
+    { on = [ "g", "s" ], run = "cd ~/code/chattyness/seed-data",  desc = "Go to Chattynes Seed Data" },
+    { on = [ "g", "p" ], run = "cd ~/code/chattyness",  desc = "Go to Chattynes Project" }
+]

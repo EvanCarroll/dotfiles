@@ -1,6 +1,0 @@
-if [ -s ~/.config/xmodmap ]; then
-	xmodmap ~/.config/xmodmap
-fi
-
-xscreensaver &
-exec i3

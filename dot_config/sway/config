@@ -1,0 +1,255 @@
+# sway conf file
+
+# Same keymap as the X11 session (~/.xsessionrc): Caps Lock -> Super, Win keys
+# stay Super. libxkbcommon finds ~/.config/xkb/symbols/local on its own.
+input type:keyboard xkb_file ~/.config/xkb/keymap.xkb
+
+set $mod Mod4
+floating_modifier $mod normal
+
+font Fira Code 12
+focus_follows_mouse no
+default_border pixel 3
+hide_edge_borders none
+
+set $term    kitty
+set $browser chromium --disable-gpu-driver-bug-workarounds --new-window
+set $menu    dmenu_path | dmenu | xargs swaymsg exec --
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec $menu
+
+set $left    h
+set $down    j
+set $up      k
+set $right   l
+set $ws1   "1:code"
+set $ws2   "2"
+set $ws3   "3"
+set $ws4   "4"
+set $ws5   "5"
+set $ws6   "6"
+set $ws7   "7:gmail"
+set $ws8   "8:reddit"
+set $ws9   "9:media"
+set $ws10  "10:com"
+set $uri_webpros_slack "https://cpanelllc.slack.com/"
+set $uri_cp_slack      "https://cpanelllc.slack.com/"
+set $uri_discord       "https://discordapp.com/channels/@me"
+set $uri_sechat        "https://chat.stackexchange.com/rooms/179/the-heap--consultancy-"
+set $uri_voice         "https://voice.google.com"
+set $uri_linkedin      "https://www.linkedin.com"
+set $uri_fb            "https://www.messenger.com"
+set $uri_work_whm      "https://cp-ec1:2087/"
+set $uri_work_cp       "https://cp-ec1:2083/"
+set $uri_work_lunch    "https://lunch.cpanel.net/"
+set $uri_mail          "https://mail.google.evancarroll.com"
+set $uri_reddit        "https://reddit.com"
+set $uri_yt            "https://youtube.com"
+set $uri_search        "https://duckduckgo.com"
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+bindsym $mod+$left         focus left
+bindsym $mod+$down         focus down
+bindsym $mod+$up           focus up
+bindsym $mod+$right        focus right
+bindsym $mod+Shift+$left   move left
+bindsym $mod+Shift+$down   move down
+bindsym $mod+Shift+$up     move up
+bindsym $mod+Shift+$right  move right
+bindsym $mod+Shift+1       move container to workspace $ws1
+bindsym $mod+Shift+2       move container to workspace $ws2
+bindsym $mod+Shift+3       move container to workspace $ws3
+bindsym $mod+Shift+4       move container to workspace $ws4
+bindsym $mod+Shift+5       move container to workspace $ws5
+bindsym $mod+Shift+6       move container to workspace $ws6
+bindsym $mod+Shift+7       move container to workspace $ws7
+bindsym $mod+Shift+8       move container to workspace $ws8
+bindsym $mod+Shift+9       move container to workspace $ws9
+bindsym $mod+Shift+0       move container to workspace $ws10
+bindsym $mod+bracketright  move workspace to output right
+bindsym $mod+bracketleft   move workspace to output left
+bindsym --locked XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym --locked XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym --locked XF86AudioMute         exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioMicMute      exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym --locked XF86AudioPlay         exec --no-startup-id playerctl play-pause
+bindsym --locked XF86AudioNext         exec --no-startup-id playerctl next
+bindsym --locked XF86AudioPrev         exec --no-startup-id playerctl previous
+bindsym --locked XF86MonBrightnessUp   exec --no-startup-id light -A 2
+bindsym --locked XF86MonBrightnessDown exec --no-startup-id light -U 2
+bindsym $mod+f       fullscreen
+bindsym $mod+Shift+v splith
+bindsym $mod+v       splitv
+bindsym $mod+Shift+s layout stacking
+bindsym $mod+w       layout tabbed
+bindsym $mod+e       layout toggle split
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus       scratchpad show
+bindsym $mod+space       focus mode_toggle
+bindsym $mod+Tab         workspace back_and_forth
+# focus the parent container
+#bindsym $mod+a focus parent
+#bindsym $mod+d focus child
+
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+### Idle configuration
+#
+# Example configuration:
+#
+exec swayidle -w \
+	timeout 180 'swaylock -f -c 000000' \
+	timeout 180 'swaymsg "output * dpms off"' \
+		resume 'swaymsg "output * dpms on"' \
+	before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+### Input configuration
+#
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+## title = page, instance = app
+##for_window [window_role="^browser$" title="me@evancarroll.com - Evancarroll.com Mail"] move to workspace $ws7
+assign [window_role="^browser$" title="me@evancarroll.com - Evancarroll.com Mail"] → $ws7
+assign [window_role="^browser$" instance="^reddit.com"]            → $ws8
+assign [window_role="^browser$" title="reddit"]                    → $ws8
+
+for_window [instance="chromium" title="YouTube"]                   move to workspace $ws9
+for_window [instance="chromium" title="Google Play Music"]         move to workspace $ws9
+# assign [window_role="^browser$" title="chat.stackexchange.com"]    → $ws10
+# assign [window_role="^browser$" title="Voice - "]                  → $ws10
+# assign [window_role="^browser$" title="Slack"]                     → $ws10
+# assign [window_role="^browser$" title="Discord"]                   → $ws10
+
+# assign [app_id="^kitty$" title="^__scratch__"] move scratchpad, border pixel 4
+
+assign [class="^vlc$"]                         → $ws9
+assign [class="^ProjectM"]                     → $ws9
+assign [title="^Signal$"]                      → $ws10
+assign [app_id="^thunderbird$"]                → $ws10
+assign [app_id="^kitty$" title="^__code__$"]   → $ws1
+assign [app_id="^kitty$" title="^__irssi__$"]  → $ws10
+assign [app_id="^kitty$" title="^__news__$"]   → $ws10
+
+mode "resize" {
+	bindsym $left resize shrink width 10px
+	bindsym $down resize grow height 10px
+	bindsym $up resize shrink height 10px
+	bindsym $right resize grow width 10px
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	bindsym $mod+r mode "default"
+}
+bindsym $mod+r mode "resize"
+
+mode "apps" {
+	bindsym p exec --no-startup-id projectM-pulseaudio, mode "default"
+	bindsym v exec --no-startup-id vlc, mode "default"
+	bindsym Shift+v exec --no-startup-id killall -s 9 vlc, mode "default"
+	bindsym m exec --no-startup-id vlc, exec --no-startup-id projectM-pulseaudio; mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+a mode "apps"
+
+mode "power" {
+	bindsym s exec --no-startup-id systemctl suspend, mode "default"
+	bindsym p exec --no-startup-id sudo cpupower frequency-set -g performance, mode "default"
+	bindsym e exec --no-startup-id sudo cpupower frequency-set -g powersave, mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+p mode "power"
+
+mode "browser" {
+	bindsym b exec $browser, mode "default"
+	bindsym a exec $browser $uri_search, mode "default"
+	bindsym s exec $browser --incognito, mode "default"
+	bindsym m exec $browser $uri_mail, mode "default"
+	bindsym r exec $browser $uri_reddit, mode "default"
+	bindsym c exec $browser $uri_cp_slack $uri_discord $uri_sechat $uri_voice $uri_fb $uri_linkedin, mode "default"
+	bindsym y exec $browser $uri_yt, mode "default"
+	bindsym w exec $browser $uri_work_whm $uri_work_cp $uri_work_lunch, mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+b mode "browser"
+
+mode "console" {
+	bindsym s exec kitty --title"=__scratch__" bash -c "rax2", mode "default"
+	bindsym i exec kitty --title="__irssi__"   bash -c "tmux new-session -A -s com 'irssi'", mode "default"
+	bindsym c exec kitty --title="__code__"    bash -c "tmux new-session -A -s code", mode "default"
+	bindsym n exec kitty --title="__news__"    bash -c "tmux new-session -A -s news", mode "default"
+	bindsym x exec kitty -o "linux_display_server=x11"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+c mode "console"
+
+mode "window_manager" {
+	## Disruptives use capitals
+	bindsym Shift+r restart , mode "default"
+	bindsym Shift+e exit
+
+	bindsym r reload, mode "default"
+	bindsym	h exec swaymsg output eDP-1 pos 0 0 res 1920x1080, mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+
+}
+bindsym $mod+BackSpace mode "window_manager"
+
+bar {
+	position bottom
+	status_command i3status
+
+	colors {
+		statusline #ffffff
+		background #323232
+		inactive_workspace #32323200 #32323200 #5c5c5c
+	}
+}
+
+include /etc/sway/config.d/*
+
+# Why fuck signal https://github.com/signalapp/Signal-Desktop/issues/4291
+exec --no-startup-id signal-desktop --no-sandbox
+exec --no-startup-id vlc
+exec --no-startup-id projectM-pulseaudio
+exec thunderbird
+exec kitty --title="__scratch__" bash -c "rax2"
+exec kitty --title="__irssi__"   bash -c "tmux new-session -A -s com 'irssi'"
+exec kitty --title="__code__"    bash -c "tmux new-session -A -s code"
+exec kitty --title="__news__"    bash -c "tmux new-session -A -s news 'newsboat'"

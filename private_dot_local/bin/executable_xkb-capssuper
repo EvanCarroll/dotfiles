@@ -1,0 +1,16 @@
+#!/bin/sh
+# Load ~/.config/xkb/keymap.xkb (Caps Lock -> Super, Win keys stay Super).
+#
+# With no arguments: apply to the whole display.
+# As an inputplug(1) hook: apply to each keyboard as X enables it. Xorg gives
+# every newly added keyboard its default keymap, which happens during session
+# startup (devices are re-added for a few seconds) and on hotplug or docking.
+#   inputplug -0 -c xkb-capssuper
+keymap() {
+	xkbcomp -w0 -I"$HOME/.config/xkb" "$@" "$HOME/.config/xkb/keymap.xkb" "$DISPLAY"
+}
+
+case "$1:$3" in
+	:) keymap ;;
+	XIDeviceEnabled:XISlaveKeyboard) keymap -i "$2" ;;
+esac

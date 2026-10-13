@@ -1,0 +1,7 @@
+# Python bytecode caches
+**/__pycache__
+**/*.pyc
+
+# System files (/etc) installed by run_onchange_after_40-lemurs.sh, not home-dir targets
+system
+system/**

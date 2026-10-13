@@ -1,5 +1,6 @@
 # If joshuto does not know how to open the file, it can resort to opening it via xdg settings
 xdg_open = true
+xdg_open_fork = true
 
 # Collapse the preview window when there is no preview available
 collapse_preview = false
@@ -11,6 +12,7 @@ column_ratio = [1, 3, 4]
 
 [preview]
 max_preview_size            = 10737418240 # 10 G
-preview_script              = "~/.config/joshuto/preview_file.sh" # make sure it's marked as executable
-preview_shown_hook_script   = "~/.config/joshuto/on_preview_shown"
-preview_removed_hook_script = "~/.config/joshuto/on_preview_removed"
+# preview_script              = "~/.config/joshuto/preview_file.sh" # make sure it's marked as executable
+# preview_shown_hook_script   = "~/.config/joshuto/on_preview_shown"
+# preview_removed_hook_script = "~/.config/joshuto/on_preview_removed"
+xdg_thumb_size = "xxlarge"

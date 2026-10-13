@@ -1,1 +1,2 @@
-. ~/.profile
+# Login zsh (tty, ssh, tmux windows).
+emulate sh -c '. "$HOME/.profile"'

@@ -1,7 +1,13 @@
 #!/bin/sh
 
-TB3_LEFT="DP-3-3"
-TB3_RIGHT="DP-3-1"
+
+## Left thunderbolt port on x1c
+# TB3_LEFT="DP-3-3"
+# TB3_RIGHT="DP-3-1"
+
+## Right thunderbolt port on x1c
+TB3_LEFT="DP-3-1"
+TB3_RIGHT="DP-2-1"
 TB4="DP-3-1-5"
 DEV="$TB3_RIGHT"
 

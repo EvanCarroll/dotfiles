@@ -1,0 +1,41 @@
+{{- if eq .chezmoi.osRelease.id "debian" -}}
+#!/bin/bash
+# Tools that aren't packaged (or are too old) in Debian, built or fetched
+# the same way they were on the original machine. Each step is skipped if
+# the tool is already installed.
+set -euo pipefail
+mkdir -p "$HOME/code"
+
+# Neovim: LazyVim needs >= 0.11; Debian 13 ships 0.10.
+if ! nvim --headless -c 'if has("nvim-0.11") | qa | else | cq | endif' 2>/dev/null; then
+	tmp=$(mktemp -d)
+	curl -fsSL -o "$tmp/nvim.tar.gz" \
+		https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+	sudo rm -rf /opt/nvim-linux-x86_64
+	sudo tar -C /opt -xzf "$tmp/nvim.tar.gz"
+	sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
+	rm -rf "$tmp"
+fi
+
+# xdg-desktop-portal-termfilechooser: yazi as the file picker
+# (see ~/.config/xdg-desktop-portal/portals.conf)
+if [ ! -x /usr/local/libexec/xdg-desktop-portal-termfilechooser ]; then
+	src="$HOME/code/xdg-desktop-portal-termfilechooser"
+	[ -d "$src" ] || git clone https://github.com/hunkyburrito/xdg-desktop-portal-termfilechooser "$src"
+	meson setup --prefix=/usr/local "$src/build" "$src"
+	ninja -C "$src/build"
+	sudo ninja -C "$src/build" install
+	# xdg-desktop-portal only reads portal definitions from its own datadir
+	sudo install -m 0644 "$src/termfilechooser.portal" /usr/share/xdg-desktop-portal/portals/
+	systemctl --user restart xdg-desktop-portal.service 2>/dev/null || true
+fi
+
+# radare2: provides rax2 (i3 scratch terminal)
+if ! command -v rax2 >/dev/null 2>&1; then
+	src="$HOME/code/radare2"
+	[ -d "$src" ] || git clone --depth 1 https://github.com/radareorg/radare2 "$src"
+	"$src/sys/install.sh"
+fi
+
+fc-cache -f >/dev/null
+{{ end -}}

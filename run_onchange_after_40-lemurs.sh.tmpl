@@ -1,0 +1,36 @@
+{{- if eq .chezmoi.osRelease.id "debian" -}}
+#!/bin/bash
+# Lemurs display manager: build from main and install its system files from
+# system/ in the chezmoi source. Installs the unit but does NOT enable it;
+# switching from LightDM is a deliberate manual step:
+#   sudo systemctl disable lightdm.service
+#   sudo systemctl enable lemurs.service
+#
+# Re-runs when any of these change:
+# config.toml     {{ include "system/etc/lemurs/config.toml" | sha256sum }}
+# pam.d/lemurs    {{ include "system/etc/pam.d/lemurs" | sha256sum }}
+# lemurs.service  {{ include "system/usr/local/lib/systemd/system/lemurs.service" | sha256sum }}
+set -euo pipefail
+if [ "$(id -u)" -eq 0 ]; then
+	echo "Run as your user, not root; privileged steps use sudo." >&2
+	exit 1
+fi
+. "$HOME/.cargo/env"
+sys={{ joinPath .chezmoi.sourceDir "system" | quote }}
+
+dpkg-query -W -f='${Status}' libpam0g-dev 2>/dev/null | grep -q 'ok installed' \
+	|| sudo apt-get install -y libpam0g-dev
+
+build=$(mktemp -d)
+trap 'rm -rf "$build"' EXIT
+# Fork main = upstream + fixes for #265 (exec X server) and #153 (-noreset).
+# Switch back to coastalwhite/lemurs once those are merged upstream.
+cargo install --locked --git https://github.com/EvanCarroll/lemurs --branch main --root "$build" lemurs
+sudo install -m 0755 "$build/bin/lemurs" /usr/local/bin/lemurs
+
+sudo install -d -m 0755 /etc/lemurs /etc/lemurs/wms /etc/lemurs/wayland
+sudo install -m 0644 "$sys/etc/lemurs/config.toml" /etc/lemurs/config.toml
+sudo install -m 0644 "$sys/etc/pam.d/lemurs" /etc/pam.d/lemurs
+sudo install -D -m 0644 "$sys/usr/local/lib/systemd/system/lemurs.service" /usr/local/lib/systemd/system/lemurs.service
+sudo systemctl daemon-reload
+{{ end -}}

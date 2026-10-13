@@ -1,0 +1,21 @@
+# Third-party content chezmoi fetches and keeps up to date.
+
+[".oh-my-zsh"]
+type = "git-repo"
+url = "https://github.com/ohmyzsh/ohmyzsh.git"
+refreshPeriod = "168h"
+
+[".oh-my-zsh/custom/themes/powerlevel10k"]
+type = "git-repo"
+url = "https://github.com/romkatv/powerlevel10k.git"
+refreshPeriod = "168h"
+clone.args = ["--depth", "1"]
+pull.args = ["--ff-only"]
+
+# kitty.conf: font_family FiraCode Nerd Font
+[".local/share/fonts/FiraCodeNerdFont"]
+type = "archive"
+url = "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.tar.xz"
+exact = true
+refreshPeriod = "720h"
+include = ["*.ttf", "LICENSE"]

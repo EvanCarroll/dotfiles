@@ -2,4 +2,9 @@
 
 xrandr --auto
 xrandr --output eDP-1 --mode 1920x1200
-xrandr --output eDP-3-1 --off
+for OUT in $( seq 1 3 ); do
+	for IN in $( seq 1 3 ); do
+		echo xrandr --output "DP-${OUT}-${IN}" --off
+		xrandr --output "DP-${OUT}-${IN}" --off > /dev/null 2> /dev/null
+	done;
+done;
