@@ -3,3 +3,6 @@
 # Replaced by starship (dot_config/starship.toml)
 .p10k.zsh
 .oh-my-zsh/custom/themes/powerlevel10k
+
+# Replaced by yazi
+.config/joshuto
