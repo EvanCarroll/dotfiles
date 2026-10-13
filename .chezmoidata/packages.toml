@@ -40,7 +40,7 @@ crates = [
   "cargo-outdated", "cargo-public-api", "cargo-watch", "cross", "csvlens",
   "ddh", "fclones", "fd-find", "fnm", "git-cliff", "leptosfmt", "lsd",
   "markdown-reader", "mdbook", "mdcat", "mf2-cli", "oculante", "procs", "qrrs",
-  "rusty-man", "sccache", "skim", "stack-sizes", "taskwarrior-tui", "tokei",
+  "rusty-man", "sccache", "skim", "stack-sizes", "starship", "taskwarrior-tui", "tokei",
   "trunk", "twiggy", "wasm-bindgen-cli", "wasm-nm", "wasm-pack", "yazi-cli",
   "yazi-fm", "zola", "zoxide",
 ]
