@@ -161,7 +161,6 @@ for_window [class="^kitty$" instance="^__news__"] move to workspace $ws10
 mode "kill" {
 	bindsym v exec killall -s 9 vlc, $mode_clear $mode_notification_id, mode "default"
 	bindsym d exec killall -s 9 Discord, $mode_clear $mode_notification_id, mode "default"
-	bindsym r exec killall -s 9 ranger, $mode_clear $mode_notification_id, mode "default"
 	bindsym z exec killall -s 9 zoom, $mode_clear $mode_notification_id, mode "default"
 	bindsym o exec killall -s 9 obs, $mode_clear $mode_notification_id, mode "default"
 	bindsym Return $mode_clear $mode_notification_id, mode "default"
