@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$1" = "--clear" ]; then
+    exec dunstify -C "$2"
+fi
+
+notification_id=$1
+shift
+exec dunstify -a sway-mode -r "$notification_id" -t 0 "SWAY MODE" "$*"

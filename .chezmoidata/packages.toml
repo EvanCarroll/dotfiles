@@ -9,6 +9,8 @@ desktop = [
   "xscreensaver", "x11-xkb-utils", "x11-xserver-utils", "inputplug", "fontconfig",
   "xdg-desktop-portal", "xdg-desktop-portal-gtk",
 ]
+# Wayland session (config: ~/.config/sway/config)
+sway = ["sway", "swaylock", "swayidle", "i3status", "dmenu", "jq"]
 # Things bound to keys or started by i3 / polybar / yazi
 apps = [
   "light", "playerctl", "pulseaudio-utils", "bluez", "linux-cpupower", "iw",

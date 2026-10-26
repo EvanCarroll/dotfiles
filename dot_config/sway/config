@@ -1,10 +1,17 @@
 # sway conf file
+# Mirrors ~/.config/i3/config where it applies. Left out on purpose: polybar,
+# i3-spatial-desktop, i3-input, xfce4-screenshooter, xscreensaver, xrandr.
 
 # Same keymap as the X11 session (~/.xsessionrc): Caps Lock -> Super, Win keys
 # stay Super. libxkbcommon finds ~/.config/xkb/symbols/local on its own.
 input type:keyboard xkb_file ~/.config/xkb/keymap.xkb
 
+exec --no-startup-id dunst
 set $mod Mod4
+# Reuse one persistent Dunst notification for every sway mode.
+set $mode_notification_id 123
+set $mode_notify exec --no-startup-id ~/.config/sway/mode-notify
+set $mode_clear  exec --no-startup-id ~/.config/sway/mode-notify --clear
 floating_modifier $mod normal
 
 font Fira Code 12
@@ -13,40 +20,39 @@ default_border pixel 3
 hide_edge_borders none
 
 set $term    kitty
-set $browser chromium --disable-gpu-driver-bug-workarounds --new-window
+set $browser chromium --disable-gpu-driver-bug-workarounds --new-window --password-store=basic
 set $menu    dmenu_path | dmenu | xargs swaymsg exec --
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
 
+for_window [app_id="^kitty$" title="^termfilechooser$"] floating enable, resize set 1200 800, move position center
+
 set $left    h
 set $down    j
 set $up      k
 set $right   l
-set $ws1   "1:code"
-set $ws2   "2"
-set $ws3   "3"
-set $ws4   "4"
-set $ws5   "5"
-set $ws6   "6"
-set $ws7   "7:gmail"
-set $ws8   "8:reddit"
-set $ws9   "9:media"
-set $ws10  "10:com"
-set $uri_webpros_slack "https://cpanelllc.slack.com/"
-set $uri_cp_slack      "https://cpanelllc.slack.com/"
-set $uri_discord       "https://discordapp.com/channels/@me"
-set $uri_sechat        "https://chat.stackexchange.com/rooms/179/the-heap--consultancy-"
-set $uri_voice         "https://voice.google.com"
-set $uri_linkedin      "https://www.linkedin.com"
-set $uri_fb            "https://www.messenger.com"
-set $uri_work_whm      "https://cp-ec1:2087/"
-set $uri_work_cp       "https://cp-ec1:2083/"
-set $uri_work_lunch    "https://lunch.cpanel.net/"
-set $uri_mail          "https://mail.google.evancarroll.com"
-set $uri_reddit        "https://reddit.com"
-set $uri_yt            "https://youtube.com"
-set $uri_search        "https://duckduckgo.com"
+
+set $ws1       "1:product"
+set $ws2       "2:site"
+set $ws3       "3"
+set $ws4       "4"
+set $ws5       "5"
+set $ws6       "6"
+set $ws7       "7:gmail"
+set $ws8       "8:work"
+set $ws_work   "8:work"
+set $ws9       "9:media"
+set $ws_media  "9:media"
+set $ws10      "10:com"
+set $ws_comm   "10:com"
+# timeout 15 /usr/bin/bluetoothctl scan on; /usr/bin/bluetoothctl scan off; bluetoothctl devices | grep -F 'DCR010' | cut -f 2 -d ' ')"
+set $bt_dewalt  "$(bluetoothctl devices | perl -anE 'print $F[1] if qq[@F[2...$#F]] eq q[DCR010]')"
+set $bt_mouse   "$(bluetoothctl devices | perl -anE 'print $F[1] if qq[@F[2...$#F]] eq q[MX Ergo]')"
+set $bt_lenovo  "$(bluetoothctl devices | perl -anE 'print $F[1] if qq[@F[2...$#F]] eq q[Lenovo 700 BT Speaker]')"
+set $bt_q5k     "$(bluetoothctl devices | perl -anE 'print $F[1] if qq[@F[2...$#F]] eq q[Qudelix-5K]')"
+set $bt_cowin   "$(bluetoothctl devices | perl -anE 'print $F[1] if qq[@F[2...$#F]] eq q[COWIN E9]')"
+
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -57,14 +63,6 @@ bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
-bindsym $mod+$left         focus left
-bindsym $mod+$down         focus down
-bindsym $mod+$up           focus up
-bindsym $mod+$right        focus right
-bindsym $mod+Shift+$left   move left
-bindsym $mod+Shift+$down   move down
-bindsym $mod+Shift+$up     move up
-bindsym $mod+Shift+$right  move right
 bindsym $mod+Shift+1       move container to workspace $ws1
 bindsym $mod+Shift+2       move container to workspace $ws2
 bindsym $mod+Shift+3       move container to workspace $ws3
@@ -75,17 +73,37 @@ bindsym $mod+Shift+7       move container to workspace $ws7
 bindsym $mod+Shift+8       move container to workspace $ws8
 bindsym $mod+Shift+9       move container to workspace $ws9
 bindsym $mod+Shift+0       move container to workspace $ws10
+bindsym $mod+Up            focus up
+bindsym $mod+Down          focus down
+bindsym $mod+Left          focus left
+bindsym $mod+Right         focus right
+bindsym $mod+Shift+Up      move up
+bindsym $mod+Shift+Down    move down
+bindsym $mod+Shift+Left    move left
+bindsym $mod+Shift+Right   move right
 bindsym $mod+bracketright  move workspace to output right
 bindsym $mod+bracketleft   move workspace to output left
-bindsym --locked XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+bindsym $mod+$left         focus left
+bindsym $mod+$down         focus down
+bindsym $mod+$up           focus up
+bindsym $mod+$right        focus right
+bindsym $mod+Shift+$left   move left
+bindsym $mod+Shift+$down   move down
+bindsym $mod+Shift+$up     move up
+bindsym $mod+Shift+$right  move right
+
+bindsym --locked XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ off; exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym --locked XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym --locked XF86AudioMute         exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ toggle
 bindsym --locked XF86AudioMicMute      exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindsym --locked XF86AudioPlay         exec --no-startup-id playerctl play-pause
+# XF86AudioPause bound to FN+p by bios on thinkpad
+bindsym --locked Pause                 exec --no-startup-id playerctl play-pause
 bindsym --locked XF86AudioNext         exec --no-startup-id playerctl next
 bindsym --locked XF86AudioPrev         exec --no-startup-id playerctl previous
-bindsym --locked XF86MonBrightnessUp   exec --no-startup-id light -A 2
-bindsym --locked XF86MonBrightnessDown exec --no-startup-id light -U 2
+bindsym --locked XF86MonBrightnessUp   exec --no-startup-id light -A "5%"
+bindsym --locked XF86MonBrightnessDown exec --no-startup-id light -U "5%"
 bindsym $mod+f       fullscreen
 bindsym $mod+Shift+v splith
 bindsym $mod+v       splitv
@@ -101,30 +119,20 @@ bindsym $mod+Tab         workspace back_and_forth
 #bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
-### Output configuration
-#
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
-# You can get the names of your outputs by running: swaymsg -t get_outputs
+for_window [app_id="xdg-desktop-portal-gtk"] floating enable, focus
+for_window [window_role="GtkFileChooserDialog"] floating enable, focus
+
+bindsym Control+mod1+Delete exec swaylock -f -c 000000
 
 ### Idle configuration
 #
-# Example configuration:
-#
+# Lock after 180 seconds of inactivity, then turn the displays off. Displays
+# come back on resume, and the screen is locked before going to sleep.
 exec swayidle -w \
 	timeout 180 'swaylock -f -c 000000' \
 	timeout 180 'swaymsg "output * dpms off"' \
 		resume 'swaymsg "output * dpms on"' \
 	before-sleep 'swaylock -f -c 000000'
-#
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
 
 ### Input configuration
 #
@@ -141,95 +149,180 @@ exec swayidle -w \
 # Read `man 5 sway-input` for more information about this section.
 
 ## title = page, instance = app
-##for_window [window_role="^browser$" title="me@evancarroll.com - Evancarroll.com Mail"] move to workspace $ws7
+assign [class="^kitty$" instance="^__code__"]                      → $ws1
+assign [app_id="^kitty$" title="^__code__"]                        → $ws1
+
 assign [window_role="^browser$" title="me@evancarroll.com - Evancarroll.com Mail"] → $ws7
-assign [window_role="^browser$" instance="^reddit.com"]            → $ws8
-assign [window_role="^browser$" title="reddit"]                    → $ws8
+assign [window_role="^browser$" instance="^reddit.com"]            → $ws7
+assign [window_role="^browser$" title="reddit"]                    → $ws7
 
-for_window [instance="chromium" title="YouTube"]                   move to workspace $ws9
-for_window [instance="chromium" title="Google Play Music"]         move to workspace $ws9
-# assign [window_role="^browser$" title="chat.stackexchange.com"]    → $ws10
-# assign [window_role="^browser$" title="Voice - "]                  → $ws10
-# assign [window_role="^browser$" title="Slack"]                     → $ws10
-# assign [window_role="^browser$" title="Discord"]                   → $ws10
+#assign [class="^vlc$"]                                             → $ws_media
+assign [class="^ProjectM"]                                         → $ws_media
+assign [window_role="^browser$" title="YouTube"]                   → $ws_media
+assign [window_role="^browser$" title="Google Play Music"]         → $ws_media
+assign [window_role="^browser$" title="Jellyfin"]                  → $ws_media
 
-# assign [app_id="^kitty$" title="^__scratch__"] move scratchpad, border pixel 4
+assign [window_role="^browser$" title=" - Outlook"]                → $ws_comm
+assign [window_role="^browser$" title="chat.stackexchange.com"]    → $ws_comm
+assign [window_role="^browser$" title="Voice - "]                  → $ws_comm
+assign [window_role="^browser$" title="Discord"]                   → $ws_comm
+assign [instance="^Signal$"]                                       → $ws_comm
+assign [title="^Signal$"]                                          → $ws_comm
+assign [instance="^Mail$"]                                         → $ws_comm
 
-assign [class="^vlc$"]                         → $ws9
-assign [class="^ProjectM"]                     → $ws9
-assign [title="^Signal$"]                      → $ws10
-assign [app_id="^thunderbird$"]                → $ws10
-assign [app_id="^kitty$" title="^__code__$"]   → $ws1
-assign [app_id="^kitty$" title="^__irssi__$"]  → $ws10
-assign [app_id="^kitty$" title="^__news__$"]   → $ws10
+exec swaymsg 'workspace $ws10; layout stacking; workspace back_and_forth'
 
-mode "resize" {
-	bindsym $left resize shrink width 10px
-	bindsym $down resize grow height 10px
-	bindsym $up resize shrink height 10px
-	bindsym $right resize grow width 10px
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
-	bindsym $mod+r mode "default"
+for_window [app_id="^kitty$" title="^__scratch__"] move scratchpad, border pixel 4
+for_window [class="Signal"] border pixel 0
+# for_window [class="vlc"] border none
+for_window [class="ProjectM"] border none
+for_window [app_id="^kitty$" title="^__irssi__"] move to workspace $ws10
+for_window [app_id="^kitty$" title="^__news__"] move to workspace $ws10
+
+mode "kill" {
+	bindsym v exec killall -s 9 vlc, $mode_clear $mode_notification_id, mode "default"
+	bindsym d exec killall -s 9 Discord, $mode_clear $mode_notification_id, mode "default"
+	bindsym z exec killall -s 9 zoom, $mode_clear $mode_notification_id, mode "default"
+	bindsym o exec killall -s 9 obs, $mode_clear $mode_notification_id, mode "default"
+	bindsym Return $mode_clear $mode_notification_id, mode "default"
+	bindsym Escape $mode_clear $mode_notification_id, mode "default"
 }
-bindsym $mod+r mode "resize"
+
+mode "focus" {
+	bindsym y [title="YouTube"] focus, $mode_clear $mode_notification_id, mode "default"
+	bindsym v [title="Voice - "] focus, $mode_clear $mode_notification_id, mode "default"
+	bindsym d [title="Discord"] focus, $mode_clear $mode_notification_id, mode "default"
+	bindsym t [title="Microsoft Teams"] focus, $mode_clear $mode_notification_id, mode "default"
+	bindsym z [title="^Zoom (?:Meeting|Webinar)"] focus, $mode_clear $mode_notification_id, mode "default"
+	bindsym m [title="Mail - Evan Carroll"] focus, $mode_clear $mode_notification_id, mode "default"
+	bindsym Shift+Z [title="Zim"] focus, $mode_clear $mode_notification_id, mode "default"
+	bindsym Shift+S [title="Signal"] focus, $mode_clear $mode_notification_id, mode "default"
+	bindsym Return $mode_clear $mode_notification_id, mode "default"
+	bindsym Escape $mode_clear $mode_notification_id, mode "default"
+}
 
 mode "apps" {
-	bindsym p exec --no-startup-id projectM-pulseaudio, mode "default"
-	bindsym v exec --no-startup-id vlc, mode "default"
-	bindsym Shift+v exec --no-startup-id killall -s 9 vlc, mode "default"
-	bindsym m exec --no-startup-id vlc, exec --no-startup-id projectM-pulseaudio; mode "default"
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
+	bindsym d exec discord, $mode_clear $mode_notification_id, mode "default"
+	bindsym p exec --no-startup-id projectM-pulseaudio, $mode_clear $mode_notification_id, mode "default"
+	bindsym v exec --no-startup-id vlc, $mode_clear $mode_notification_id, mode "default"
+	bindsym m exec --no-startup-id vlc, exec --no-startup-id projectM-pulseaudio; $mode_clear $mode_notification_id, mode "default"
+	bindsym x $mode_notify $mode_notification_id "KILL", mode "kill"
+	bindsym f $mode_notify $mode_notification_id "FOCUS", mode "focus"
+	bindsym k $mode_notify $mode_notification_id "KILL", mode "kill"
+	bindsym Return $mode_clear $mode_notification_id, mode "default"
+	bindsym Escape $mode_clear $mode_notification_id, mode "default"
 }
-bindsym $mod+a mode "apps"
+bindsym $mod+a $mode_notify $mode_notification_id "APPS", mode "apps"
 
-mode "power" {
-	bindsym s exec --no-startup-id systemctl suspend, mode "default"
-	bindsym p exec --no-startup-id sudo cpupower frequency-set -g performance, mode "default"
-	bindsym e exec --no-startup-id sudo cpupower frequency-set -g powersave, mode "default"
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
+mode "resize" {
+	bindsym $left  resize shrink width 10 px or 10 ppt
+	bindsym $down  resize grow height 10 px or 10 ppt
+	bindsym $up    resize shrink height 10 px or 10 ppt
+	bindsym $right resize grow width 10 px or 10 ppt
+	bindsym Return $mode_clear $mode_notification_id, mode "default"
+	bindsym Escape $mode_clear $mode_notification_id, mode "default"
+	bindsym $mod+r $mode_clear $mode_notification_id, mode "default"
 }
-bindsym $mod+p mode "power"
+bindsym $mod+r $mode_notify $mode_notification_id "RESIZE", mode "resize"
 
+set $uri_discord       "https://discordapp.com/channels/@me"
+set $uri_jellyfin      "http://cow.home.evancarroll.com:8096/"
+set $uri_mail          "https://mail.google.evancarroll.com"
+set $uri_reddit        "https://reddit.com"
+set $uri_search        "https://duckduckgo.com"
+set $uri_voice         "https://voice.google.com"
+set $uri_yt            "https://youtube.com"
 mode "browser" {
-	bindsym b exec $browser, mode "default"
-	bindsym a exec $browser $uri_search, mode "default"
-	bindsym s exec $browser --incognito, mode "default"
-	bindsym m exec $browser $uri_mail, mode "default"
-	bindsym r exec $browser $uri_reddit, mode "default"
-	bindsym c exec $browser $uri_cp_slack $uri_discord $uri_sechat $uri_voice $uri_fb $uri_linkedin, mode "default"
-	bindsym y exec $browser $uri_yt, mode "default"
-	bindsym w exec $browser $uri_work_whm $uri_work_cp $uri_work_lunch, mode "default"
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
+	bindsym b exec $browser, $mode_clear $mode_notification_id, mode "default"
+	bindsym a exec $browser $uri_search, $mode_clear $mode_notification_id, mode "default"
+	bindsym s exec $browser --incognito, $mode_clear $mode_notification_id, mode "default"
+	bindsym w exec $browser --user-data-dir=/home/ecarroll/.config/chromium_work, $mode_clear $mode_notification_id, mode "default"
+	bindsym o $mode_notify $mode_notification_id "BROWSER-OPEN", mode "browser-open"
+	bindsym Return $mode_clear $mode_notification_id, mode "default"
+	bindsym Escape $mode_clear $mode_notification_id, mode "default"
 }
-bindsym $mod+b mode "browser"
+bindsym $mod+b $mode_notify $mode_notification_id "BROWSER", mode "browser"
 
-mode "console" {
-	bindsym s exec kitty --title"=__scratch__" bash -c "rax2", mode "default"
-	bindsym i exec kitty --title="__irssi__"   bash -c "tmux new-session -A -s com 'irssi'", mode "default"
-	bindsym c exec kitty --title="__code__"    bash -c "tmux new-session -A -s code", mode "default"
-	bindsym n exec kitty --title="__news__"    bash -c "tmux new-session -A -s news", mode "default"
-	bindsym x exec kitty -o "linux_display_server=x11"
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
+mode "browser-open" {
+	bindsym m exec $browser $uri_mail, $mode_clear $mode_notification_id, mode "default"
+	bindsym r exec $browser $uri_reddit, $mode_clear $mode_notification_id, mode "default"
+	bindsym y exec $browser $uri_yt, $mode_clear $mode_notification_id, mode "default"
+	bindsym j exec $browser $uri_jellyfin, $mode_clear $mode_notification_id, mode "default"
+	bindsym Return $mode_clear $mode_notification_id, mode "default"
+	bindsym Escape $mode_clear $mode_notification_id, mode "default"
 }
-bindsym $mod+c mode "console"
+
+# Kitty windows are matched by title here (see the assign/for_window rules above).
+mode "console" {
+	bindsym s exec $term --title="__scratch__" rax2 -l, $mode_clear $mode_notification_id, mode "default"
+	bindsym i exec $term --title="__irssi__"   tmux new-session -A -s com 'irssi', $mode_clear $mode_notification_id, mode "default"
+	bindsym c exec $term --title="__code__"    tmux new-session -A -s code, $mode_clear $mode_notification_id, mode "default"
+	bindsym n exec $term --title="__news__"    tmux new-session -A -s news, $mode_clear $mode_notification_id, mode "default"
+	bindsym x exec $term -o "linux_display_server=x11", $mode_clear $mode_notification_id, mode "default"
+	bindsym Return $mode_clear $mode_notification_id, mode "default"
+	bindsym Escape $mode_clear $mode_notification_id, mode "default"
+}
+bindsym $mod+c $mode_notify $mode_notification_id "CONSOLE", mode "console"
 
 mode "window_manager" {
 	## Disruptives use capitals
-	bindsym Shift+r restart , mode "default"
-	bindsym Shift+e exit
+	# sway has no `restart`; `reload` is the closest equivalent.
+	bindsym Shift+e $mode_clear $mode_notification_id, exit
 
-	bindsym r reload, mode "default"
-	bindsym	h exec swaymsg output eDP-1 pos 0 0 res 1920x1080, mode "default"
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
+	bindsym r reload, $mode_clear $mode_notification_id, mode "default"
 
+	bindsym l exec --no-startup-id swaylock -f -c 000000, $mode_clear $mode_notification_id, mode "default"
+	bindsym s exec --no-startup-id swaylock -f -c 000000, exec --no-startup-id systemctl suspend -i, $mode_clear $mode_notification_id, mode "default"
+	bindsym e exec "gvim ~/.config/sway/config", $mode_clear $mode_notification_id, mode "default"
+
+	bindsym h exec swaymsg output eDP-1 pos 0 0 res 1920x1080, $mode_clear $mode_notification_id, mode "default"
+	# Any non-eDP-1 output: up turns everything on, down turns the external off.
+	# (sway has no "left-of"/"right-of", so the i3 Left/Right bindings are omitted.)
+	bindsym Up    exec swaymsg output '*' enable
+	bindsym Down  exec swaymsg output "$(swaymsg -t get_outputs | sed -ne'/eDP-1/d' -e's/^Output \([^ ]*\) .*/\1/p')" disable, $mode_clear $mode_notification_id, mode "default"
+
+	bindsym Return $mode_clear $mode_notification_id, mode "default"
+	bindsym Escape $mode_clear $mode_notification_id, mode "default"
 }
-bindsym $mod+BackSpace mode "window_manager"
+bindsym $mod+BackSpace $mode_notify $mode_notification_id "WINDOW MANAGER", mode "window_manager"
+
+mode "power" {
+	bindsym s exec --no-startup-id systemctl suspend, $mode_clear $mode_notification_id, mode "default"
+	bindsym b exec       --no-startup-id bluetoothctl power on , $mode_clear $mode_notification_id, mode "default"
+	bindsym Shift+B exec --no-startup-id bluetoothctl power off, $mode_clear $mode_notification_id, mode "default"
+	bindsym w exec       --no-startup-id /sbin/rfkill unblock wifi, $mode_clear $mode_notification_id, mode "default"
+	bindsym Shift+W exec --no-startup-id /sbin/rfkill block wifi  , $mode_clear $mode_notification_id, mode "default"
+
+	bindsym Up   exec --no-startup-id light -A 2%
+	bindsym Down exec --no-startup-id light -U 2%
+	bindsym Shift+Up   exec --no-startup-id light -S 100
+	bindsym Shift+Down exec --no-startup-id light -S 0.01
+	bindsym Return $mode_clear $mode_notification_id, mode "default"
+	bindsym Escape $mode_clear $mode_notification_id, mode "default"
+}
+
+mode "bluetooth" {
+	# cowin
+	bindsym c       exec --no-startup-id bluetoothctl connect    $bt_cowin,  $mode_clear $mode_notification_id, mode "default"
+	bindsym Shift+C exec --no-startup-id bluetoothctl disconnect $bt_cowin,  $mode_clear $mode_notification_id, mode "default"
+	bindsym q       exec --no-startup-id bluetoothctl connect    $bt_q5k,    $mode_clear $mode_notification_id, mode "default"
+	bindsym Shift+Q exec --no-startup-id bluetoothctl disconnect $bt_q5k,    $mode_clear $mode_notification_id, mode "default"
+	bindsym l       exec --no-startup-id bluetoothctl connect    $bt_lenovo, $mode_clear $mode_notification_id, mode "default"
+	bindsym Shift+L exec --no-startup-id bluetoothctl disconnect $bt_lenovo, $mode_clear $mode_notification_id, mode "default"
+	bindsym m       exec --no-startup-id bluetoothctl connect    $bt_mouse,  $mode_clear $mode_notification_id, mode "default"
+	bindsym Shift+M exec --no-startup-id bluetoothctl disconnect $bt_mouse,  $mode_clear $mode_notification_id, mode "default"
+
+	bindsym Return $mode_clear $mode_notification_id, mode "default"
+	bindsym Escape $mode_clear $mode_notification_id, mode "default"
+}
+
+mode "system" {
+	bindsym b $mode_notify $mode_notification_id "BLUETOOTH", mode "bluetooth"
+	bindsym p $mode_notify $mode_notification_id "POWER", mode "power"
+	bindsym Return $mode_clear $mode_notification_id, mode "default"
+	bindsym Escape $mode_clear $mode_notification_id, mode "default"
+}
+bindsym $mod+s $mode_notify $mode_notification_id "SYSTEM", mode "system"
 
 bar {
 	position bottom
@@ -248,8 +341,8 @@ include /etc/sway/config.d/*
 exec --no-startup-id signal-desktop --no-sandbox
 exec --no-startup-id vlc
 exec --no-startup-id projectM-pulseaudio
-exec thunderbird
-exec kitty --title="__scratch__" bash -c "rax2"
-exec kitty --title="__irssi__"   bash -c "tmux new-session -A -s com 'irssi'"
-exec kitty --title="__code__"    bash -c "tmux new-session -A -s code"
-exec kitty --title="__news__"    bash -c "tmux new-session -A -s news 'newsboat'"
+# exec thunderbird
+exec kitty --title="__scratch__" rax2 -l
+#exec kitty --title="__irssi__"   tmux new-session -A -s com 'irssi'
+exec kitty --title="__code__"    tmux new-session -A -s code
+exec kitty --title="__news__"    tmux new-session -A -s news 'newsboat'
