@@ -1,3 +1,19 @@
+{{- /*
+  Detect the system battery and AC adapter on the machine this is applied to
+  (BAT0/AC on most laptops, macsmc-battery/macsmc-ac on Apple Silicon under
+  Asahi). Peripherals such as hidpp_battery_0 don't match. With no battery
+  (desktops) the module is left out of the bar.
+*/ -}}
+{{- $battery := "" -}}
+{{- $adapter := "" -}}
+{{- range glob "/sys/class/power_supply/*" -}}
+{{-   if and (eq $battery "") (regexMatch "(?i)^(bat[0-9]+|[a-z0-9]+-battery)$" (base .)) -}}
+{{-     $battery = base . -}}
+{{-   end -}}
+{{-   if and (eq $adapter "") (regexMatch "(?i)^(ac[a-z0-9]*|adp[0-9]+|[a-z0-9]+-ac)$" (base .)) -}}
+{{-     $adapter = base . -}}
+{{-   end -}}
+{{- end -}}
 [colors]
 # background = #282A2E
 # background-alt = #373B41
@@ -41,7 +57,7 @@ font-0 = Fira Code;2
 font-1 = ChaosStarVector:size=15
 
 modules-left = i3-mode i3-spatial-desktop
-modules-right = filesystem pulseaudio memory cpu wlan eth battery date
+modules-right = filesystem pulseaudio memory cpu wlan eth{{ if $battery }} battery{{ end }} date
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -124,8 +140,10 @@ label-muted-foreground = ${colors.disabled}
 
 [module/battery]
 type = internal/battery
-battery = BAT0
-adapter = AC
+battery = {{ $battery | default "BAT0" }}
+{{ if $adapter -}}
+adapter = {{ $adapter }}
+{{ end -}}
 poll-interval = 5
 format-charging = <label-charging>
 format-discharging = <label-discharging>
