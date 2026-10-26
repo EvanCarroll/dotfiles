@@ -133,6 +133,13 @@ exec swayidle -w \
 	timeout 300 '$HOME/.config/sway/screen off' \
 		resume '$HOME/.config/sway/screen on'
 
+# Lid: closing it locks and turns the panel off; opening turns the panel on
+# (the lock screen is then showing). logind must ignore the lid switch or it
+# suspends the machine: /etc/systemd/logind.conf.d/lid.conf, HandleLidSwitch*=ignore.
+# --locked so the switch still works while swaylock is up.
+bindswitch --locked lid:on  exec '$HOME/.config/sway/lock; $HOME/.config/sway/screen off'
+bindswitch --locked lid:off exec '$HOME/.config/sway/screen on'
+
 ### Input configuration
 #
 # Example configuration:
