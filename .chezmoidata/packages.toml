@@ -21,31 +21,42 @@ forges = ["gh", "glab"]
 # Toolchain + build deps for cargo crates and xdg-desktop-portal-termfilechooser
 build = [
   "build-essential", "pkg-config", "libssl-dev",
-  "meson", "ninja-build", "scdoc", "libinih-dev", "libsystemd-dev",
+  "meson", "ninja-build", "cmake", "scdoc", "libinih-dev", "libsystemd-dev",
   "libpam0g-dev", # lemurs
+  "libfontconfig-dev", "libglib2.0-dev", "libpango1.0-dev", "libcairo2-dev", # wired, oculante
+  "libgtk-3-dev", "libasound2-dev", "libxcb1-dev", "libxkbcommon-dev", "libwayland-dev", # oculante
+  "libxss-dev", # wired (x11 crate)
 ]
 # From third-party repos configured by run_onchange_before_10-apt.sh
-thirdparty = ["signal-desktop"]
+thirdparty = ["signal-desktop"] # amd64 only; skipped elsewhere
 
 [rust]
 toolchains = ["stable", "nightly"]
 default = "nightly"
 components = ["rust-src", "rust-analyzer", "clippy", "rustfmt"]
-targets = ["wasm32-unknown-unknown", "x86_64-unknown-linux-musl"]
+targets = ["wasm32-unknown-unknown"]
+# Static-linking target for the host, keyed by .chezmoi.arch
+musl = { amd64 = "x86_64-unknown-linux-musl", arm64 = "aarch64-unknown-linux-musl" }
 
 # Installed with `cargo binstall` (prebuilt when available, else compiled).
+# Pins: rusty-man 0.5.0 no longer builds; stack-sizes 0.5.0 ships no binary.
 crates = [
   "ag", "b3sum", "bat", "bottom", "cargo-bloat", "cargo-edit", "cargo-expand",
   "cargo-fuzz", "cargo-generate", "cargo-insta", "cargo-leptos", "cargo-limit",
   "cargo-outdated", "cargo-public-api", "cargo-watch", "cross", "csvlens",
   "ddh", "fclones", "fd-find", "fnm", "git-cliff", "leptosfmt", "lsd",
   "markdown-reader", "mdbook", "mdcat", "mf2-cli", "oculante", "procs", "qrrs",
-  "rusty-man", "sccache", "skim", "stack-sizes", "starship", "taskwarrior-tui", "tokei",
+  "rusty-man@0.4.3", "sccache", "skim", "stack-sizes@0.4.0", "starship", "taskwarrior-tui", "tokei",
   "trunk", "twiggy", "wasm-bindgen-cli", "wasm-nm", "wasm-pack", "yazi-cli",
-  "yazi-fm", "zola", "zoxide",
+  "yazi-fm", "zoxide",
 ]
 
-# Installed with `cargo install --git` (not on crates.io).
+# Installed with `cargo install --git` (not on crates.io; the crates.io
+# `zola` is a placeholder).
+[[rust.git]]
+url = "https://github.com/getzola/zola"
+package = "zola"
+
 [[rust.git]]
 url = "https://github.com/EvanCarroll/i3-spatial-desktop"
 package = "i3-spatial-desktop"

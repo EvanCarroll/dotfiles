@@ -6,14 +6,15 @@
 set -euo pipefail
 mkdir -p "$HOME/code"
 
+{{ $nvim := dict "amd64" "nvim-linux-x86_64" "arm64" "nvim-linux-arm64" -}}
 # Neovim: LazyVim needs >= 0.11; Debian 13 ships 0.10.
 if ! nvim --headless -c 'if has("nvim-0.11") | qa | else | cq | endif' 2>/dev/null; then
 	tmp=$(mktemp -d)
 	curl -fsSL -o "$tmp/nvim.tar.gz" \
-		https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-	sudo rm -rf /opt/nvim-linux-x86_64
+		https://github.com/neovim/neovim/releases/latest/download/{{ index $nvim .chezmoi.arch }}.tar.gz
+	sudo rm -rf /opt/{{ index $nvim .chezmoi.arch }}
 	sudo tar -C /opt -xzf "$tmp/nvim.tar.gz"
-	sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
+	sudo ln -sf /opt/{{ index $nvim .chezmoi.arch }}/bin/nvim /usr/local/bin/nvim
 	rm -rf "$tmp"
 fi
 

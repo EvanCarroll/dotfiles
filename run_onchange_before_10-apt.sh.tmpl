@@ -12,18 +12,23 @@ if [ ! -e /etc/apt/sources.list.d/github-cli.list ]; then
 	echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
 		| sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
 fi
+{{ if eq .chezmoi.arch "amd64" -}}
+# Signal only publishes amd64 packages.
 if [ ! -e /etc/apt/sources.list.d/signal-repo.list ]; then
 	curl -fsSL https://updates.signal.org/desktop/apt/keys.asc \
 		| gpg --dearmor | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg >/dev/null
 	echo "deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main" \
 		| sudo tee /etc/apt/sources.list.d/signal-repo.list >/dev/null
 fi
+{{ end -}}
 
 sudo apt-get update
 sudo apt-get install -y --no-install-recommends \
 {{- range $group, $pkgs := .apt }}
 {{-   range $pkgs }}
+{{-     if or (ne . "signal-desktop") (eq $.chezmoi.arch "amd64") }}
 	{{ . }} \
+{{-     end }}
 {{-   end }}
 {{- end }}
 
