@@ -128,11 +128,12 @@ bindsym Control+mod1+Delete exec ~/.config/sway/lock
 #
 # Lock after 5 minutes idle (options in ~/.config/swaylock/config), turn the
 # screen off 30 seconds later, and back on at the first input. Also lock before
-# suspend and on `loginctl lock-session`.
+# suspend and on `loginctl lock-session`. Use the `screen` helper: a bare
+# `power on` is dropped on this display after a `power off` (see that script).
 exec swayidle -w \
 	timeout 300 '$HOME/.config/sway/lock' \
-	timeout 330 'swaymsg "output * power off"' \
-		resume 'swaymsg "output * power on"' \
+	timeout 330 '$HOME/.config/sway/screen off' \
+		resume '$HOME/.config/sway/screen on' \
 	before-sleep '$HOME/.config/sway/lock' \
 	lock '$HOME/.config/sway/lock'
 

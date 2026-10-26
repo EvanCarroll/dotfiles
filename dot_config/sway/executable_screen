@@ -1,0 +1,23 @@
+#!/bin/sh
+# screen on|off: power all outputs.
+#
+# On the Apple Silicon display (Asahi) the first `output * power on` after a
+# `power off` is silently dropped (swaymsg reports success, the output stays
+# off); a second one works. So `on` retries until sway reports the outputs on.
+case "$1" in
+off)
+	exec swaymsg 'output * power off' >/dev/null
+	;;
+on)
+	for _ in 1 2 3 4 5 6; do
+		swaymsg 'output * power on' >/dev/null
+		sleep 0.5
+		swaymsg -t get_outputs | grep -q '"power": false' || exit 0
+	done
+	exit 1
+	;;
+*)
+	echo "usage: ${0##*/} on|off" >&2
+	exit 2
+	;;
+esac
