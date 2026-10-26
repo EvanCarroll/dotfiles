@@ -1,0 +1,8 @@
+# swaylock options (read automatically; ~/.config/swaylock/config)
+color=1d2021
+# Show the ring even when idle so the screen never looks like it is just off.
+indicator-idle-visible
+indicator-radius=100
+show-failed-attempts
+show-keyboard-layout
+ignore-empty-password

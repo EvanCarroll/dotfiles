@@ -1,0 +1,4 @@
+#!/bin/sh
+# Lock the session once. swayidle's timeout, before-sleep and lock events and
+# the key bindings all call this, so overlapping triggers never stack lockers.
+pgrep -x swaylock >/dev/null || exec swaylock -f

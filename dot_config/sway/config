@@ -122,17 +122,19 @@ bindsym $mod+Tab         workspace back_and_forth
 for_window [app_id="xdg-desktop-portal-gtk"] floating enable, focus
 for_window [window_role="GtkFileChooserDialog"] floating enable, focus
 
-bindsym Control+mod1+Delete exec swaylock -f -c 000000
+bindsym Control+mod1+Delete exec ~/.config/sway/lock
 
 ### Idle configuration
 #
-# Lock after 180 seconds of inactivity, then turn the displays off. Displays
-# come back on resume, and the screen is locked before going to sleep.
+# Lock after 5 minutes idle (options in ~/.config/swaylock/config), turn the
+# screen off 30 seconds later, and back on at the first input. Also lock before
+# suspend and on `loginctl lock-session`.
 exec swayidle -w \
-	timeout 180 'swaylock -f -c 000000' \
-	timeout 180 'swaymsg "output * dpms off"' \
-		resume 'swaymsg "output * dpms on"' \
-	before-sleep 'swaylock -f -c 000000'
+	timeout 300 '$HOME/.config/sway/lock' \
+	timeout 330 'swaymsg "output * power off"' \
+		resume 'swaymsg "output * power on"' \
+	before-sleep '$HOME/.config/sway/lock' \
+	lock '$HOME/.config/sway/lock'
 
 ### Input configuration
 #
@@ -271,8 +273,8 @@ mode "window_manager" {
 
 	bindsym r reload, $mode_clear $mode_notification_id, mode "default"
 
-	bindsym l exec --no-startup-id swaylock -f -c 000000, $mode_clear $mode_notification_id, mode "default"
-	bindsym s exec --no-startup-id swaylock -f -c 000000, exec --no-startup-id systemctl suspend -i, $mode_clear $mode_notification_id, mode "default"
+	bindsym l exec --no-startup-id ~/.config/sway/lock, $mode_clear $mode_notification_id, mode "default"
+	bindsym s exec --no-startup-id ~/.config/sway/lock, exec --no-startup-id systemctl suspend -i, $mode_clear $mode_notification_id, mode "default"
 	bindsym e exec "gvim ~/.config/sway/config", $mode_clear $mode_notification_id, mode "default"
 
 	bindsym h exec swaymsg output eDP-1 pos 0 0 res 1920x1080, $mode_clear $mode_notification_id, mode "default"
